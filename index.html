@@ -9,11 +9,14 @@
   <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
   <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
 
+  <!-- EB Garamond -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
   <!-- Estilos -->
   <link rel="stylesheet" href="css/estilos.css" />
 </head>
 
-<body>
+<body class="fuente-ebgaramond">
 
   <!-- BOTÓN HAMBURGUESA -->
   <button id="toggle-panel" class="toggle-btn">☰</button>
@@ -27,11 +30,34 @@
       <!-- BOTÓN DE CERRAR -->
       <button id="close-panel" class="close-btn">✕</button>
 
-      <!-- INTERRUPTOR MODO OSCURO -->
-      <label class="modo-oscuro-toggle">
-        <input type="checkbox" id="modoOscuro">
-        Modo oscuro
-      </label>
+      <!-- SELECTOR DE FUENTE -->
+      <div class="fuente-contenedor">
+        <label>Fuente:</label>
+        <select id="selectorFuente">
+          <option value="garamond">Garamond clásica</option>
+          <option value="ebgaramond" selected>EB Garamond (histórica)</option>
+        </select>
+      </div>
+
+      <!-- SELECTOR DE MODOS -->
+      <div class="modo-contenedor">
+        <label><input type="radio" name="modo" value="normal" checked> Normal</label>
+        <label><input type="radio" name="modo" value="oscuro"> Oscuro</label>
+        <label><input type="radio" name="modo" value="sepia"> Sepia</label>
+        <label><input type="radio" name="modo" value="alto"> Alto contraste</label>
+        <label><input type="radio" name="modo" value="antiguo"> Tema antiguo</label>
+      </div>
+
+      <!-- SELECTOR DE ESTILO DE MAPA -->
+      <div class="mapa-contenedor">
+        <label>Estilo de mapa:</label>
+        <select id="estiloMapa">
+          <option value="osm">OSM clásico</option>
+          <option value="sat">Satélite</option>
+          <option value="pergamino">Pergamino (Stamen Toner)</option>
+          <option value="antique" selected>Carto Antique (Stadia)</option>
+        </select>
+      </div>
 
       <h2>Llegada de la Imprenta</h2>
       <div id="timeline"></div>
@@ -63,13 +89,21 @@
     closeBtn.addEventListener("click", cerrarPanel);
     overlay.addEventListener("click", cerrarPanel);
 
-    /* MODO OSCURO */
-    document.getElementById("modoOscuro").addEventListener("change", (e) => {
-      if (e.target.checked) {
-        document.body.classList.add("modo-oscuro");
-      } else {
-        document.body.classList.remove("modo-oscuro");
-      }
+    /* SELECTOR DE FUENTE */
+    document.getElementById("selectorFuente").addEventListener("change", (e) => {
+      document.body.classList.remove("fuente-garamond", "fuente-ebgaramond");
+      document.body.classList.add("fuente-" + e.target.value);
+    });
+
+    /* MODOS DE COLOR */
+    document.querySelectorAll("input[name='modo']").forEach(radio => {
+      radio.addEventListener("change", () => {
+        document.body.classList.remove("modo-oscuro", "modo-sepia", "modo-alto", "modo-antiguo");
+        if (radio.value === "oscuro") document.body.classList.add("modo-oscuro");
+        if (radio.value === "sepia") document.body.classList.add("modo-sepia");
+        if (radio.value === "alto") document.body.classList.add("modo-alto");
+        if (radio.value === "antiguo") document.body.classList.add("modo-antiguo");
+      });
     });
 
     /* MAPA */
@@ -82,132 +116,142 @@
 
     map.on("load", function () {
 
-      /* FONDO OSM */
-      map.addSource("osm", {
-        type: "raster",
-        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-        tileSize: 256,
-        attribution: "© OpenStreetMap contributors"
-      });
-
-      map.addLayer({
-        id: "osm-layer",
-        type: "raster",
-        source: "osm"
-      });
-
-      /* CAPA ESPAÑA */
-      map.addSource("imprenta-espana", {
-        type: "geojson",
-        data: "data/espana.geojson"
-      });
-
-      map.addLayer({
-        id: "imprenta-espana-puntos",
-        type: "circle",
-        source: "imprenta-espana",
-        paint: { "circle-radius": 8, "circle-color": "#dc2626" }
-      });
-
-      /* CAPA EUROPA */
-      map.addSource("imprenta-europa", {
-        type: "geojson",
-        data: "data/europa.geojson"
-      });
-
-      map.addLayer({
-        id: "imprenta-europa-puntos",
-        type: "circle",
-        source: "imprenta-europa",
-        paint: { "circle-radius": 8, "circle-color": "#1d4ed8" }
-      });
-
-      /* POPUPS */
-      const popup = new maplibregl.Popup({
-        closeButton: false,
-        closeOnClick: false
-      });
-
-      function generarHTML(props) {
-        let impresores = props.impresores_relevantes;
-        if (typeof impresores === "string") {
-          try { impresores = JSON.parse(impresores); }
-          catch { impresores = [impresores]; }
+      /* ESTILOS DE MAPA */
+      const estilos = {
+        osm: {
+          tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"]
+        },
+        sat: {
+          tiles: ["https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"]
+        },
+        pergamino: {
+          tiles: ["https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}.png"]
+        },
+        antique: {
+          tiles: ["https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png"]
         }
-        if (!Array.isArray(impresores)) impresores = [impresores];
+      };
 
-        let html = `
-          <div style="max-width:220px">
-            <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
-            <p><strong>País:</strong> ${props.pais}</p>
-            <p><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
-            <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
-            <p>${props.nota}</p>
-        `;
-        if (props.imagen) {
-          html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
-        }
-        html += `</div>`;
-        return html;
-      }
-
-      function cerrarPanelSiMovil() {
-        if (window.innerWidth <= 768) cerrarPanel();
-      }
-
-      /* EVENTOS ESPAÑA */
-      map.on("mouseenter", "imprenta-espana-puntos", (e) => {
-        map.getCanvas().style.cursor = "pointer";
-        popup.setLngLat(e.features[0].geometry.coordinates)
-             .setHTML(generarHTML(e.features[0].properties))
-             .addTo(map);
+      map.addSource("base", {
+        type: "raster",
+        tiles: estilos.antique.tiles,
+        tileSize: 256
       });
 
-      map.on("mouseleave", "imprenta-espana-puntos", () => {
-        map.getCanvas().style.cursor = "";
-        popup.remove();
+      map.addLayer({ id: "base-layer", type: "raster", source: "base" });
+
+      document.getElementById("estiloMapa").addEventListener("change", (e) => {
+        map.getSource("base").setTiles(estilos[e.target.value].tiles);
       });
 
-      map.on("click", "imprenta-espana-puntos", cerrarPanelSiMovil);
+      /* ICONO DE IMPRENTA (PNG) */
+      map.loadImage("img/imprenta.png", (error, image) => {
+        if (error) throw error;
+        map.addImage("imprenta-icon", image);
 
-      /* EVENTOS EUROPA */
-      map.on("mouseenter", "imprenta-europa-puntos", (e) => {
-        map.getCanvas().style.cursor = "pointer";
-        popup.setLngLat(e.features[0].geometry.coordinates)
-             .setHTML(generarHTML(e.features[0].properties))
-             .addTo(map);
-      });
-
-      map.on("mouseleave", "imprenta-europa-puntos", () => {
-        map.getCanvas().style.cursor = "";
-        popup.remove();
-      });
-
-      map.on("click", "imprenta-europa-puntos", cerrarPanelSiMovil);
-
-      /* TIMELINE */
-      fetch("data/timeline.json")
-        .then(r => r.json())
-        .then(datos => {
-          const cont = document.getElementById("timeline");
-
-          datos.timeline.forEach(item => {
-            const div = document.createElement("div");
-            div.className = "paso";
-            div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
-
-            div.addEventListener("click", () => {
-              map.flyTo({
-                center: item.map_action.flyTo.center,
-                zoom: item.map_action.flyTo.zoom,
-                speed: 0.6
-              });
-              cerrarPanelSiMovil();
-            });
-
-            cont.appendChild(div);
-          });
+        /* CAPAS GEOJSON */
+        map.addSource("imprenta-espana", { type: "geojson", data: "data/espana.geojson" });
+        map.addLayer({
+          id: "imprenta-espana-puntos",
+          type: "symbol",
+          source: "imprenta-espana",
+          layout: {
+            "icon-image": "imprenta-icon",
+            "icon-size": 0.8,
+            "icon-allow-overlap": true
+          }
         });
+
+        map.addSource("imprenta-europa", { type: "geojson", data: "data/europa.geojson" });
+        map.addLayer({
+          id: "imprenta-europa-puntos",
+          type: "symbol",
+          source: "imprenta-europa",
+          layout: {
+            "icon-image": "imprenta-icon",
+            "icon-size": 0.8,
+            "icon-allow-overlap": true
+          }
+        });
+
+        /* POPUPS */
+        const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
+
+        function generarHTML(props) {
+          let impresores = props.impresores_relevantes;
+          if (typeof impresores === "string") {
+            try { impresores = JSON.parse(impresores); }
+            catch { impresores = [impresores]; }
+          }
+          if (!Array.isArray(impresores)) impresores = [impresores];
+
+          let html = `
+            <div style="max-width:220px">
+              <h3>${props.nombre}</h3>
+              <p><strong>País:</strong> ${props.pais}</p>
+              <p><strong>Año:</strong> ${props.ano_llegada_imprenta}</p>
+              <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
+              <p>${props.nota}</p>
+          `;
+          if (props.imagen) html += `<img src="${props.imagen}" style="width:100%; border-radius:4px;">`;
+          html += `</div>`;
+          return html;
+        }
+
+        function cerrarPanelSiMovil() {
+          if (window.innerWidth <= 768) cerrarPanel();
+        }
+
+        /* EVENTOS ESPAÑA */
+        map.on("mouseenter", "imprenta-espana-puntos", (e) => {
+          map.getCanvas().style.cursor = "pointer";
+          popup.setLngLat(e.features[0].geometry.coordinates)
+               .setHTML(generarHTML(e.features[0].properties))
+               .addTo(map);
+        });
+        map.on("mouseleave", "imprenta-espana-puntos", () => {
+          map.getCanvas().style.cursor = "";
+          popup.remove();
+        });
+        map.on("click", "imprenta-espana-puntos", cerrarPanelSiMovil);
+
+        /* EVENTOS EUROPA */
+        map.on("mouseenter", "imprenta-europa-puntos", (e) => {
+          map.getCanvas().style.cursor = "pointer";
+          popup.setLngLat(e.features[0].geometry.coordinates)
+               .setHTML(generarHTML(e.features[0].properties))
+               .addTo(map);
+        });
+        map.on("mouseleave", "imprenta-europa-puntos", () => {
+          map.getCanvas().style.cursor = "";
+          popup.remove();
+        });
+        map.on("click", "imprenta-europa-puntos", cerrarPanelSiMovil);
+
+        /* TIMELINE */
+        fetch("data/timeline.json")
+          .then(r => r.json())
+          .then(datos => {
+            const cont = document.getElementById("timeline");
+
+            datos.timeline.forEach(item => {
+              const div = document.createElement("div");
+              div.className = "paso";
+              div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
+
+              div.addEventListener("click", () => {
+                map.flyTo({
+                  center: item.map_action.flyTo.center,
+                  zoom: item.map_action.flyTo.zoom,
+                  speed: 0.6
+                });
+                cerrarPanelSiMovil();
+              });
+
+              cont.appendChild(div);
+            });
+          });
+      });
     });
   </script>
 </body>
