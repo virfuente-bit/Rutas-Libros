@@ -8,7 +8,8 @@
         "pais": "Alemania",
         "ano_llegada_imprenta": 1450,
         "impresores_relevantes": ["Johannes Gutenberg"],
-        "nota": "Inicio de la imprenta en Europa"
+        "nota": "Cuna de la imprenta moderna.",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mainz_Marktplatz.jpg/640px-Mainz_Marktplatz.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -18,25 +19,12 @@
     {
       "type": "Feature",
       "properties": {
-        "nombre": "Bamberg",
-        "pais": "Alemania",
-        "ano_llegada_imprenta": 1455,
-        "impresores_relevantes": ["Albrecht Pfister"],
-        "nota": "Primeros impresos ilustrados"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [10.8903, 49.8987]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "nombre": "Venecia",
         "pais": "Italia",
         "ano_llegada_imprenta": 1469,
-        "impresores_relevantes": ["Johannes de Spira", "Aldo Manuzio"],
-        "nota": "Principal centro editorial del Renacimiento"
+        "impresores_relevantes": ["Aldo Manuzio"],
+        "nota": "Uno de los mayores centros impresores del Renacimiento.",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Venice_Grand_Canal_2017.jpg/640px-Venice_Grand_Canal_2017.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -49,8 +37,9 @@
         "nombre": "París",
         "pais": "Francia",
         "ano_llegada_imprenta": 1470,
-        "impresores_relevantes": ["Ulrich Gering", "Michael Friburger", "Martin Crantz"],
-        "nota": "Primer taller francés documentado"
+        "impresores_relevantes": ["Ulrich Gering"],
+        "nota": "Uno de los primeros focos impresores europeos.",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Paris_Night.jpg/640px-Paris_Night.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -64,11 +53,27 @@
         "pais": "Italia",
         "ano_llegada_imprenta": 1467,
         "impresores_relevantes": ["Conrad Sweynheym", "Arnold Pannartz"],
-        "nota": "Uno de los primeros centros impresores italianos"
+        "nota": "Imprenta temprana ligada al Vaticano.",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg/640px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [12.4964, 41.9028]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Londres",
+        "pais": "Reino Unido",
+        "ano_llegada_imprenta": 1476,
+        "impresores_relevantes": ["William Caxton"],
+        "nota": "Introducción de la imprenta en Inglaterra.",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg/640px-Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.1276, 51.5074]
       }
     }
   ]
