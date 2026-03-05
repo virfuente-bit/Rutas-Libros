@@ -9,7 +9,7 @@
         "ano_llegada_imprenta": 1450,
         "impresores_relevantes": ["Johannes Gutenberg"],
         "nota": "Cuna de la imprenta moderna.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mainz_Marktplatz.jpg/640px-Mainz_Marktplatz.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Mainz_altstadt.jpg/250px-Mainz_altstadt.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -78,3 +78,4 @@
     }
   ]
 }
+
