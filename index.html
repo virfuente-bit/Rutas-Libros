@@ -9,9 +9,6 @@
   <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
   <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
 
-  <!-- EB Garamond -->
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
-
   <!-- Estilos -->
   <link rel="stylesheet" href="css/estilos.css" />
 </head>
@@ -30,22 +27,12 @@
       <!-- BOTÓN DE CERRAR -->
       <button id="close-panel" class="close-btn">✕</button>
 
-      <!-- SELECTOR DE FUENTE -->
-      <div class="fuente-contenedor">
-        <label>Fuente:</label>
-        <select id="selectorFuente">
-          <option value="garamond">Garamond clásica</option>
-          <option value="ebgaramond" selected>EB Garamond (histórica)</option>
-        </select>
-      </div>
-
       <!-- SELECTOR DE MODOS -->
       <div class="modo-contenedor">
         <label><input type="radio" name="modo" value="normal" checked> Normal</label>
         <label><input type="radio" name="modo" value="oscuro"> Oscuro</label>
         <label><input type="radio" name="modo" value="sepia"> Sepia</label>
         <label><input type="radio" name="modo" value="alto"> Alto contraste</label>
-        <label><input type="radio" name="modo" value="antiguo"> Mapa antiguo</label>
       </div>
 
       <!-- SELECTOR DE ESTILO DE MAPA -->
@@ -55,7 +42,6 @@
           <option value="osm">OSM clásico</option>
           <option value="sat">Satélite</option>
           <option value="pergamino">Pergamino antiguo</option>
-          <option value="antique" selected>Carto Antique</option>
         </select>
       </div>
 
@@ -89,20 +75,13 @@
     closeBtn.addEventListener("click", cerrarPanel);
     overlay.addEventListener("click", cerrarPanel);
 
-    /* SELECTOR DE FUENTE */
-    document.getElementById("selectorFuente").addEventListener("change", (e) => {
-      document.body.classList.remove("fuente-garamond", "fuente-ebgaramond");
-      document.body.classList.add("fuente-" + e.target.value);
-    });
-
     /* MODOS DE COLOR */
     document.querySelectorAll("input[name='modo']").forEach(radio => {
       radio.addEventListener("change", () => {
-        document.body.classList.remove("modo-oscuro", "modo-sepia", "modo-alto", "modo-antiguo");
+        document.body.classList.remove("modo-oscuro", "modo-sepia", "modo-alto");
         if (radio.value === "oscuro") document.body.classList.add("modo-oscuro");
         if (radio.value === "sepia") document.body.classList.add("modo-sepia");
         if (radio.value === "alto") document.body.classList.add("modo-alto");
-        if (radio.value === "antiguo") document.body.classList.add("modo-antiguo");
       });
     });
 
@@ -119,25 +98,23 @@
       /* ESTILOS DE MAPA */
       const estilos = {
         osm: {
-          tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"]
+          type: "raster",
+          tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+          tileSize: 256
         },
         sat: {
-          tiles: ["https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"]
+          type: "raster",
+          tiles: ["https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
+          tileSize: 256
         },
         pergamino: {
-          tiles: ["https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}.png"]
-        },
-        antique: {
-          tiles: ["https://cartocdn_a.global.ssl.fastly.net/base-antique/{z}/{x}/{y}.png"]
+          type: "raster",
+          tiles: ["https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}.png"],
+          tileSize: 256
         }
       };
 
-      map.addSource("base", {
-        type: "raster",
-        tiles: estilos.antique.tiles,
-        tileSize: 256
-      });
-
+      map.addSource("base", estilos.osm);
       map.addLayer({ id: "base-layer", type: "raster", source: "base" });
 
       document.getElementById("estiloMapa").addEventListener("change", (e) => {
@@ -216,4 +193,21 @@
           datos.timeline.forEach(item => {
             const div = document.createElement("div");
             div.className = "paso";
-            div.innerHTML = `<strong>${item.city}</strong> (${
+            div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
+
+            div.addEventListener("click", () => {
+              map.flyTo({
+                center: item.map_action.flyTo.center,
+                zoom: item.map_action.flyTo.zoom,
+                speed: 0.6
+              });
+              cerrarPanelSiMovil();
+            });
+
+            cont.appendChild(div);
+          });
+        });
+    });
+  </script>
+</body>
+</html>
