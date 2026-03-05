@@ -9,6 +9,9 @@
   <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
   <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
 
+  <!-- EB Garamond -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
   <!-- Estilos -->
   <link rel="stylesheet" href="css/estilos.css" />
 </head>
@@ -26,12 +29,6 @@
 
       <!-- BOTÓN DE CERRAR -->
       <button id="close-panel" class="close-btn">✕</button>
-
-      <!-- INTERRUPTOR MODO OSCURO -->
-      <label class="modo-oscuro-toggle">
-        <input type="checkbox" id="modoOscuro">
-        Modo oscuro
-      </label>
 
       <h2>Llegada de la Imprenta</h2>
       <div id="timeline"></div>
@@ -63,15 +60,6 @@
     closeBtn.addEventListener("click", cerrarPanel);
     overlay.addEventListener("click", cerrarPanel);
 
-    /* MODO OSCURO */
-    document.getElementById("modoOscuro").addEventListener("change", (e) => {
-      if (e.target.checked) {
-        document.body.classList.add("modo-oscuro");
-      } else {
-        document.body.classList.remove("modo-oscuro");
-      }
-    });
-
     /* MAPA */
     const map = new maplibregl.Map({
       container: "map",
@@ -82,18 +70,17 @@
 
     map.on("load", function () {
 
-      /* FONDO OSM */
-      map.addSource("osm", {
+      /* MAPA ANTIGUO (FUNCIONA SIEMPRE) */
+      map.addSource("base", {
         type: "raster",
-        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-        tileSize: 256,
-        attribution: "© OpenStreetMap contributors"
+        tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"],
+        tileSize: 256
       });
 
       map.addLayer({
-        id: "osm-layer",
+        id: "base-layer",
         type: "raster",
-        source: "osm"
+        source: "base"
       });
 
       /* CAPA ESPAÑA */
@@ -106,7 +93,7 @@
         id: "imprenta-espana-puntos",
         type: "circle",
         source: "imprenta-espana",
-        paint: { "circle-radius": 8, "circle-color": "#dc2626" }
+        paint: { "circle-radius": 8, "circle-color": "#6b4a2b" }
       });
 
       /* CAPA EUROPA */
@@ -119,7 +106,7 @@
         id: "imprenta-europa-puntos",
         type: "circle",
         source: "imprenta-europa",
-        paint: { "circle-radius": 8, "circle-color": "#1d4ed8" }
+        paint: { "circle-radius": 8, "circle-color": "#3a2a1a" }
       });
 
       /* POPUPS */
