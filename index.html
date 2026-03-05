@@ -41,7 +41,7 @@
     map.on("load", function () {
 
       /* ---------------------------------------------------------
-         1) FONDO OSM (FUNCIONA SIEMPRE)
+         1) FONDO OSM
       --------------------------------------------------------- */
       map.addSource("osm", {
         type: "raster",
@@ -96,40 +96,70 @@
       });
 
       /* ---------------------------------------------------------
-         4) POPUPS
+         4) POPUPS — HOVER + FOTO
       --------------------------------------------------------- */
-      function crearPopup(e) {
-        const props = e.features[0].properties;
-        let impresores = props.impresores_relevantes;
 
-        try {
-          impresores = JSON.parse(impresores);
-        } catch (e) {}
+      const popup = new maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
 
-        new maplibregl.Popup()
-          .setLngLat(e.lngLat)
-          .setHTML(`
-            <strong>${props.nombre}</strong><br>
-            País: ${props.pais}<br>
-            Año: ${props.ano_llegada_imprenta}<br>
-            Impresores: ${Array.isArray(impresores) ? impresores.join(", ") : impresores}<br>
-            <em>${props.nota}</em>
-          `)
-          .addTo(map);
+      function generarHTML(props) {
+        let html = `
+          <div style="max-width:220px">
+            <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
+            <p style="margin:4px 0;"><strong>País:</strong> ${props.pais}</p>
+            <p style="margin:4px 0;"><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
+            <p style="margin:4px 0;"><strong>Impresores:</strong> ${props.impresores_relevantes.join(", ")}</p>
+            <p style="margin:4px 0;">${props.nota}</p>
+        `;
+
+        if (props.imagen) {
+          html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
+        }
+
+        html += `</div>`;
+        return html;
       }
 
-      map.on("click", "imprenta-espana-puntos", crearPopup);
-      map.on("click", "imprenta-europa-puntos", crearPopup);
+      /* ESPAÑA */
+      map.on("mouseenter", "imprenta-espana-puntos", (e) => {
+        map.getCanvas().style.cursor = "pointer";
+        const feature = e.features[0];
+        popup
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML(generarHTML(feature.properties))
+          .addTo(map);
+      });
+
+      map.on("mouseleave", "imprenta-espana-puntos", () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
+
+      /* EUROPA */
+      map.on("mouseenter", "imprenta-europa-puntos", (e) => {
+        map.getCanvas().style.cursor = "pointer";
+        const feature = e.features[0];
+        popup
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML(generarHTML(feature.properties))
+          .addTo(map);
+      });
+
+      map.on("mouseleave", "imprenta-europa-puntos", () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
 
       /* ---------------------------------------------------------
-         5) TIMELINE (CORREGIDO)
+         5) TIMELINE
       --------------------------------------------------------- */
       fetch("data/timeline.json")
         .then((r) => r.json())
         .then((datos) => {
           const cont = document.getElementById("timeline");
 
-          // 🔥 CAMBIO IMPORTANTE: datos.timeline.forEach
           datos.timeline.forEach((item) => {
             const div = document.createElement("div");
             div.className = "paso";
@@ -150,4 +180,3 @@
   </script>
 </body>
 </html>
-
