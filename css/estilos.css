@@ -19,7 +19,7 @@ body {
   border-right: 4px solid #3a2f1b;
   box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.25);
   overflow-y: auto;
-  transition: transform 0.3s ease; /* necesario para móvil */
+  transition: transform 0.3s ease;
 }
 
 #panel h2 {
@@ -107,18 +107,28 @@ body {
   font-size: 20px;
   border-radius: 4px;
   cursor: pointer;
-  display: none; /* solo visible en móvil */
+  display: none;
+}
+
+/* OVERLAY SEMITRANSPARENTE */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  z-index: 1400;
+  display: none;
 }
 
 /* VISTA MÓVIL */
 @media (max-width: 768px) {
 
-  /* Mostrar botón */
   .toggle-btn {
     display: block;
   }
 
-  /* Panel oculto por defecto */
   #panel {
     position: absolute;
     top: 0;
@@ -130,18 +140,15 @@ body {
     box-shadow: 2px 0 6px rgba(0,0,0,0.2);
   }
 
-  /* Panel visible */
   #panel.open {
     transform: translateX(0);
   }
 
-  /* El mapa ocupa toda la pantalla */
   #map {
     width: 100%;
     height: 100vh;
   }
 
-  /* El contenedor deja de ser flex horizontal */
   #contenedor {
     display: block;
   }
