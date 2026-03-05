@@ -6,10 +6,7 @@
   <title>Llegada de la Imprenta</title>
 
   <!-- MapLibre -->
-  <link
-    href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
-    rel="stylesheet"
-  />
+  <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
   <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
 
   <!-- Estilos -->
@@ -21,14 +18,20 @@
   <!-- BOTÓN HAMBURGUESA -->
   <button id="toggle-panel" class="toggle-btn">☰</button>
 
-  <!-- OVERLAY SEMITRANSPARENTE -->
+  <!-- OVERLAY -->
   <div id="overlay"></div>
 
   <div id="contenedor">
     <div id="panel">
 
-      <!-- BOTÓN DE CERRAR DENTRO DEL PANEL -->
+      <!-- BOTÓN DE CERRAR -->
       <button id="close-panel" class="close-btn">✕</button>
+
+      <!-- INTERRUPTOR MODO OSCURO -->
+      <label class="modo-oscuro-toggle">
+        <input type="checkbox" id="modoOscuro">
+        Modo oscuro
+      </label>
 
       <h2>Llegada de la Imprenta</h2>
       <div id="timeline"></div>
@@ -38,9 +41,7 @@
   </div>
 
   <script>
-    /* ---------------------------------------------------------
-       PANEL + OVERLAY
-    --------------------------------------------------------- */
+    /* PANEL + OVERLAY */
     const panel = document.getElementById("panel");
     const overlay = document.getElementById("overlay");
     const toggleBtn = document.getElementById("toggle-panel");
@@ -48,42 +49,43 @@
 
     function abrirPanel() {
       panel.classList.add("open");
+      overlay.classList.add("visible");
       overlay.style.display = "block";
     }
 
     function cerrarPanel() {
       panel.classList.remove("open");
-      overlay.style.display = "none";
+      overlay.classList.remove("visible");
+      setTimeout(() => overlay.style.display = "none", 300);
     }
 
     toggleBtn.addEventListener("click", abrirPanel);
-    overlay.addEventListener("click", cerrarPanel);
     closeBtn.addEventListener("click", cerrarPanel);
+    overlay.addEventListener("click", cerrarPanel);
 
-    /* ---------------------------------------------------------
-       MAPA
-    --------------------------------------------------------- */
+    /* MODO OSCURO */
+    document.getElementById("modoOscuro").addEventListener("change", (e) => {
+      if (e.target.checked) {
+        document.body.classList.add("modo-oscuro");
+      } else {
+        document.body.classList.remove("modo-oscuro");
+      }
+    });
+
+    /* MAPA */
     const map = new maplibregl.Map({
       container: "map",
-      style: {
-        version: 8,
-        sources: {},
-        layers: []
-      },
+      style: { version: 8, sources: {}, layers: [] },
       center: [-3.7, 40.4],
       zoom: 4
     });
 
     map.on("load", function () {
 
-      /* ---------------------------------------------------------
-         1) FONDO OSM
-      --------------------------------------------------------- */
+      /* FONDO OSM */
       map.addSource("osm", {
         type: "raster",
-        tiles: [
-          "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-        ],
+        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
         tileSize: 256,
         attribution: "© OpenStreetMap contributors"
       });
@@ -91,13 +93,10 @@
       map.addLayer({
         id: "osm-layer",
         type: "raster",
-        source: "osm",
-        paint: {}
+        source: "osm"
       });
 
-      /* ---------------------------------------------------------
-         2) CAPA ESPAÑA
-      --------------------------------------------------------- */
+      /* CAPA ESPAÑA */
       map.addSource("imprenta-espana", {
         type: "geojson",
         data: "data/espana.geojson"
@@ -107,15 +106,10 @@
         id: "imprenta-espana-puntos",
         type: "circle",
         source: "imprenta-espana",
-        paint: {
-          "circle-radius": 8,
-          "circle-color": "#dc2626"
-        }
+        paint: { "circle-radius": 8, "circle-color": "#dc2626" }
       });
 
-      /* ---------------------------------------------------------
-         3) CAPA EUROPA
-      --------------------------------------------------------- */
+      /* CAPA EUROPA */
       map.addSource("imprenta-europa", {
         type: "geojson",
         data: "data/europa.geojson"
@@ -125,16 +119,10 @@
         id: "imprenta-europa-puntos",
         type: "circle",
         source: "imprenta-europa",
-        paint: {
-          "circle-radius": 8,
-          "circle-color": "#1d4ed8"
-        }
+        paint: { "circle-radius": 8, "circle-color": "#1d4ed8" }
       });
 
-      /* ---------------------------------------------------------
-         4) POPUPS — HOVER + FOTO
-      --------------------------------------------------------- */
-
+      /* POPUPS */
       const popup = new maplibregl.Popup({
         closeButton: false,
         closeOnClick: false
@@ -142,54 +130,37 @@
 
       function generarHTML(props) {
         let impresores = props.impresores_relevantes;
-
         if (typeof impresores === "string") {
-          try {
-            impresores = JSON.parse(impresores);
-          } catch {
-            impresores = [impresores];
-          }
+          try { impresores = JSON.parse(impresores); }
+          catch { impresores = [impresores]; }
         }
-
-        if (!Array.isArray(impresores)) {
-          impresores = [impresores];
-        }
+        if (!Array.isArray(impresores)) impresores = [impresores];
 
         let html = `
           <div style="max-width:220px">
             <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
-            <p style="margin:4px 0;"><strong>País:</strong> ${props.pais}</p>
-            <p style="margin:4px 0;"><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
-            <p style="margin:4px 0;"><strong>Impresores:</strong> ${impresores.join(", ")}</p>
-            <p style="margin:4px 0;">${props.nota}</p>
+            <p><strong>País:</strong> ${props.pais}</p>
+            <p><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
+            <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
+            <p>${props.nota}</p>
         `;
-
         if (props.imagen) {
           html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
         }
-
         html += `</div>`;
         return html;
       }
 
-      /* ---------------------------------------------------------
-         CIERRE AUTOMÁTICO DEL PANEL AL TOCAR UN PUNTO
-      --------------------------------------------------------- */
-
       function cerrarPanelSiMovil() {
-        if (window.innerWidth <= 768) {
-          cerrarPanel();
-        }
+        if (window.innerWidth <= 768) cerrarPanel();
       }
 
-      /* ESPAÑA */
+      /* EVENTOS ESPAÑA */
       map.on("mouseenter", "imprenta-espana-puntos", (e) => {
         map.getCanvas().style.cursor = "pointer";
-        const feature = e.features[0];
-        popup
-          .setLngLat(feature.geometry.coordinates)
-          .setHTML(generarHTML(feature.properties))
-          .addTo(map);
+        popup.setLngLat(e.features[0].geometry.coordinates)
+             .setHTML(generarHTML(e.features[0].properties))
+             .addTo(map);
       });
 
       map.on("mouseleave", "imprenta-espana-puntos", () => {
@@ -199,14 +170,12 @@
 
       map.on("click", "imprenta-espana-puntos", cerrarPanelSiMovil);
 
-      /* EUROPA */
+      /* EVENTOS EUROPA */
       map.on("mouseenter", "imprenta-europa-puntos", (e) => {
         map.getCanvas().style.cursor = "pointer";
-        const feature = e.features[0];
-        popup
-          .setLngLat(feature.geometry.coordinates)
-          .setHTML(generarHTML(feature.properties))
-          .addTo(map);
+        popup.setLngLat(e.features[0].geometry.coordinates)
+             .setHTML(generarHTML(e.features[0].properties))
+             .addTo(map);
       });
 
       map.on("mouseleave", "imprenta-europa-puntos", () => {
@@ -216,15 +185,13 @@
 
       map.on("click", "imprenta-europa-puntos", cerrarPanelSiMovil);
 
-      /* ---------------------------------------------------------
-         5) TIMELINE
-      --------------------------------------------------------- */
+      /* TIMELINE */
       fetch("data/timeline.json")
-        .then((r) => r.json())
-        .then((datos) => {
+        .then(r => r.json())
+        .then(datos => {
           const cont = document.getElementById("timeline");
 
-          datos.timeline.forEach((item) => {
+          datos.timeline.forEach(item => {
             const div = document.createElement("div");
             div.className = "paso";
             div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
@@ -235,7 +202,6 @@
                 zoom: item.map_action.flyTo.zoom,
                 speed: 0.6
               });
-
               cerrarPanelSiMovil();
             });
 
