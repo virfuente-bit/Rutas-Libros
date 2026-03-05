@@ -39,7 +39,7 @@
         "ano_llegada_imprenta": 1474,
         "impresores_relevantes": ["Lambert Palmart"],
         "nota": "Impresión temprana de obras religiosas y humanistas.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Valencia_Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies_2013.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/7/72/Puerta_de_los_Serranos%2C_Valencia%2C_Espa%C3%B1a%2C_2014-06-30%2C_DD_86.JPG"
       },
       "geometry": {
         "type": "Point",
@@ -63,5 +63,6 @@
     }
   ]
 }
+
 
 
