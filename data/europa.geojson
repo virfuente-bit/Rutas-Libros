@@ -69,7 +69,7 @@
         "ano_llegada_imprenta": 1467,
         "impresores_relevantes": ["Conrad Sweynheym", "Arnold Pannartz"],
         "nota": "Imprenta temprana ligada al Vaticano.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg/640px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Plastico_E.U.R._rom_marts_2003.jpg/960px-Plastico_E.U.R._rom_marts_2003.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -93,6 +93,7 @@
     }
   ]
 }
+
 
 
 
