@@ -16,132 +16,41 @@
   <link rel="stylesheet" href="css/estilos.css" />
 </head>
 
-<body class="fuente-ebgaramond">
-
-  <!-- BOTÓN HAMBURGUESA -->
-  <button id="toggle-panel" class="toggle-btn">☰</button>
-
-  <!-- OVERLAY -->
-  <div id="overlay"></div>
+<body>
 
   <div id="contenedor">
+
     <div id="panel">
-
-      <!-- BOTÓN DE CERRAR -->
-      <button id="close-panel" class="close-btn">✕</button>
-
-      <!-- SELECTOR DE FUENTE -->
-      <div class="fuente-contenedor">
-        <label>Fuente:</label>
-        <select id="selectorFuente">
-          <option value="garamond">Garamond clásica</option>
-          <option value="ebgaramond" selected>EB Garamond (histórica)</option>
-        </select>
-      </div>
-
-      <!-- SELECTOR DE MODOS -->
-      <div class="modo-contenedor">
-        <label><input type="radio" name="modo" value="normal" checked> Normal</label>
-        <label><input type="radio" name="modo" value="oscuro"> Oscuro</label>
-        <label><input type="radio" name="modo" value="sepia"> Sepia</label>
-        <label><input type="radio" name="modo" value="alto"> Alto contraste</label>
-        <label><input type="radio" name="modo" value="antiguo"> Tema antiguo</label>
-      </div>
-
-      <!-- SELECTOR DE ESTILO DE MAPA -->
-      <div class="mapa-contenedor">
-        <label>Estilo de mapa:</label>
-        <select id="estiloMapa">
-          <option value="osm">OSM clásico</option>
-          <option value="sat">Satélite</option>
-          <option value="pergamino">Pergamino (Stamen Toner)</option>
-          <option value="antique" selected>Carto Antique (Stamen Toner)</option>
-        </select>
-      </div>
-
       <h2>Llegada de la Imprenta</h2>
       <div id="timeline"></div>
     </div>
 
     <div id="map"></div>
+
   </div>
 
   <script>
-    /* PANEL + OVERLAY */
-    const panel = document.getElementById("panel");
-    const overlay = document.getElementById("overlay");
-    const toggleBtn = document.getElementById("toggle-panel");
-    const closeBtn = document.getElementById("close-panel");
-
-    function abrirPanel() {
-      panel.classList.add("open");
-      overlay.classList.add("visible");
-      overlay.style.display = "block";
-    }
-
-    function cerrarPanel() {
-      panel.classList.remove("open");
-      overlay.classList.remove("visible");
-      setTimeout(() => overlay.style.display = "none", 300);
-    }
-
-    toggleBtn.addEventListener("click", abrirPanel);
-    closeBtn.addEventListener("click", cerrarPanel);
-    overlay.addEventListener("click", cerrarPanel);
-
-    /* SELECTOR DE FUENTE */
-    document.getElementById("selectorFuente").addEventListener("change", (e) => {
-      document.body.classList.remove("fuente-garamond", "fuente-ebgaramond");
-      document.body.classList.add("fuente-" + e.target.value);
-    });
-
-    /* MODOS DE COLOR */
-    document.querySelectorAll("input[name='modo']").forEach(radio => {
-      radio.addEventListener("change", () => {
-        document.body.classList.remove("modo-oscuro", "modo-sepia", "modo-alto", "modo-antiguo");
-        if (radio.value === "oscuro") document.body.classList.add("modo-oscuro");
-        if (radio.value === "sepia") document.body.classList.add("modo-sepia");
-        if (radio.value === "alto") document.body.classList.add("modo-alto");
-        if (radio.value === "antiguo") document.body.classList.add("modo-antiguo");
-      });
-    });
-
     /* MAPA */
     const map = new maplibregl.Map({
       container: "map",
       style: { version: 8, sources: {}, layers: [] },
       center: [-3.7, 40.4],
-      zoom: 4
+      zoom: 5
     });
 
     map.on("load", function () {
 
-      /* ESTILOS DE MAPA */
-      const estilos = {
-        osm: {
-          tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"]
-        },
-        sat: {
-          tiles: ["https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"]
-        },
-        pergamino: {
-          tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"]
-        },
-        antique: {
-          tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"]
-        }
-      };
-
+      /* ESTILO DE MAPA ANTIGUO (FUNCIONA) */
       map.addSource("base", {
         type: "raster",
-        tiles: estilos.antique.tiles,
+        tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"],
         tileSize: 256
       });
 
-      map.addLayer({ id: "base-layer", type: "raster", source: "base" });
-
-      document.getElementById("estiloMapa").addEventListener("change", (e) => {
-        map.getSource("base").setTiles(estilos[e.target.value].tiles);
+      map.addLayer({
+        id: "base-layer",
+        type: "raster",
+        source: "base"
       });
 
       /* CAPAS GEOJSON */
@@ -150,7 +59,10 @@
         id: "imprenta-espana-puntos",
         type: "circle",
         source: "imprenta-espana",
-        paint: { "circle-radius": 8, "circle-color": "#8b5a2b" }
+        paint: {
+          "circle-radius": 7,
+          "circle-color": "#6b4a2b"
+        }
       });
 
       map.addSource("imprenta-europa", { type: "geojson", data: "data/europa.geojson" });
@@ -158,7 +70,10 @@
         id: "imprenta-europa-puntos",
         type: "circle",
         source: "imprenta-europa",
-        paint: { "circle-radius": 8, "circle-color": "#5a3a1a" }
+        paint: {
+          "circle-radius": 7,
+          "circle-color": "#3a2a1a"
+        }
       });
 
       /* POPUPS */
@@ -172,48 +87,33 @@
         }
         if (!Array.isArray(impresores)) impresores = [impresores];
 
-        let html = `
+        return `
           <div style="max-width:220px">
             <h3>${props.nombre}</h3>
             <p><strong>País:</strong> ${props.pais}</p>
             <p><strong>Año:</strong> ${props.ano_llegada_imprenta}</p>
             <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
             <p>${props.nota}</p>
+          </div>
         `;
-        if (props.imagen) html += `<img src="${props.imagen}" style="width:100%; border-radius:4px;">`;
-        html += `</div>`;
-        return html;
       }
 
-      function cerrarPanelSiMovil() {
-        if (window.innerWidth <= 768) cerrarPanel();
+      function eventos(capa) {
+        map.on("mouseenter", capa, (e) => {
+          map.getCanvas().style.cursor = "pointer";
+          popup.setLngLat(e.features[0].geometry.coordinates)
+               .setHTML(generarHTML(e.features[0].properties))
+               .addTo(map);
+        });
+
+        map.on("mouseleave", capa, () => {
+          map.getCanvas().style.cursor = "";
+          popup.remove();
+        });
       }
 
-      /* EVENTOS ESPAÑA */
-      map.on("mouseenter", "imprenta-espana-puntos", (e) => {
-        map.getCanvas().style.cursor = "pointer";
-        popup.setLngLat(e.features[0].geometry.coordinates)
-             .setHTML(generarHTML(e.features[0].properties))
-             .addTo(map);
-      });
-      map.on("mouseleave", "imprenta-espana-puntos", () => {
-        map.getCanvas().style.cursor = "";
-        popup.remove();
-      });
-      map.on("click", "imprenta-espana-puntos", cerrarPanelSiMovil);
-
-      /* EVENTOS EUROPA */
-      map.on("mouseenter", "imprenta-europa-puntos", (e) => {
-        map.getCanvas().style.cursor = "pointer";
-        popup.setLngLat(e.features[0].geometry.coordinates)
-             .setHTML(generarHTML(e.features[0].properties))
-             .addTo(map);
-      });
-      map.on("mouseleave", "imprenta-europa-puntos", () => {
-        map.getCanvas().style.cursor = "";
-        popup.remove();
-      });
-      map.on("click", "imprenta-europa-puntos", cerrarPanelSiMovil);
+      eventos("imprenta-espana-puntos");
+      eventos("imprenta-europa-puntos");
 
       /* TIMELINE */
       fetch("data/timeline.json")
@@ -232,7 +132,6 @@
                 zoom: item.map_action.flyTo.zoom,
                 speed: 0.6
               });
-              cerrarPanelSiMovil();
             });
 
             cont.appendChild(div);
@@ -240,5 +139,6 @@
         });
     });
   </script>
+
 </body>
 </html>
