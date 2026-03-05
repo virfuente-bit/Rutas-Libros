@@ -11,7 +11,7 @@ body {
   height: 100vh;
 }
 
-/* PANEL LATERAL */
+/* PANEL */
 #panel {
   width: 320px;
   padding: 20px;
@@ -19,20 +19,47 @@ body {
   border-right: 4px solid #3a2f1b;
   box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.25);
   overflow-y: auto;
-  transition: transform 0.3s ease;
+  position: relative;
+  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 #panel h2 {
-  font-family: "Garamond", serif;
   font-size: 26px;
   margin-top: 0;
-  margin-bottom: 20px;
   text-align: center;
-  letter-spacing: 1px;
   color: #3a2f1b;
   text-shadow: 0 0 1px #000;
 }
 
+/* BOTÓN CERRAR */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #3a2f1b;
+  color: #fffaf0;
+  border: none;
+  font-size: 20px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1600;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: #5a4528;
+}
+
+/* INTERRUPTOR MODO OSCURO */
+.modo-oscuro-toggle {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* TIMELINE */
 #timeline {
   display: flex;
   flex-direction: column;
@@ -58,41 +85,29 @@ body {
 /* MAPA */
 #map {
   flex: 1;
-  position: relative;
   filter: grayscale(1) contrast(1.25) brightness(0.95);
-  background-color: #f2ead6;
 }
 
 /* POPUPS */
 .maplibregl-popup-content {
-  font-family: "Garamond", serif;
   background: #fffaf0;
   border: 1px solid #8c6f3c;
   border-radius: 4px;
   padding: 10px 14px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.25);
 }
 
 .maplibregl-popup-tip {
   border-top-color: #8c6f3c !important;
 }
 
-/* SCROLL PANEL */
+/* SCROLL */
 #panel::-webkit-scrollbar {
   width: 10px;
-}
-
-#panel::-webkit-scrollbar-track {
-  background: #f7f1df;
 }
 
 #panel::-webkit-scrollbar-thumb {
   background: #8c6f3c;
   border-radius: 5px;
-}
-
-#panel::-webkit-scrollbar-thumb:hover {
-  background: #6e532c;
 }
 
 /* BOTÓN HAMBURGUESA */
@@ -110,7 +125,7 @@ body {
   display: none;
 }
 
-/* OVERLAY SEMITRANSPARENTE */
+/* OVERLAY */
 #overlay {
   position: fixed;
   top: 0;
@@ -120,9 +135,48 @@ body {
   background: rgba(0,0,0,0.45);
   z-index: 1400;
   display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-/* VISTA MÓVIL */
+#overlay.visible {
+  opacity: 1;
+}
+
+/* MODO OSCURO */
+body.modo-oscuro {
+  background-color: #1e1e1e;
+  color: #e8e8e8;
+}
+
+body.modo-oscuro #panel {
+  background: #2a2a2a;
+  border-right-color: #555;
+  box-shadow: inset 0 0 25px rgba(255,255,255,0.05);
+}
+
+body.modo-oscuro .paso {
+  background: #333;
+  border-color: #666;
+  color: #eee;
+}
+
+body.modo-oscuro .paso:hover {
+  background: #3d3d3d;
+  border-color: #888;
+}
+
+body.modo-oscuro .maplibregl-popup-content {
+  background: #2a2a2a;
+  color: #eee;
+  border-color: #666;
+}
+
+body.modo-oscuro #map {
+  filter: grayscale(0.2) brightness(0.6) contrast(1.1);
+}
+
+/* MÓVIL */
 @media (max-width: 768px) {
 
   .toggle-btn {
@@ -137,7 +191,6 @@ body {
     height: 100%;
     transform: translateX(-270px);
     z-index: 1500;
-    box-shadow: 2px 0 6px rgba(0,0,0,0.2);
   }
 
   #panel.open {
