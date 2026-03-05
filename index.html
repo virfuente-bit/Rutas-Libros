@@ -55,7 +55,7 @@
           <option value="osm">OSM clásico</option>
           <option value="sat">Satélite</option>
           <option value="pergamino">Pergamino (Stamen Toner)</option>
-          <option value="antique" selected>Carto Antique (Stadia)</option>
+          <option value="antique" selected>Carto Antique (Stamen Toner)</option>
         </select>
       </div>
 
@@ -125,10 +125,10 @@
           tiles: ["https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"]
         },
         pergamino: {
-          tiles: ["https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}.png"]
+          tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"]
         },
         antique: {
-          tiles: ["https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png"]
+          tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"]
         }
       };
 
@@ -144,114 +144,100 @@
         map.getSource("base").setTiles(estilos[e.target.value].tiles);
       });
 
-      /* ICONO DE IMPRENTA (PNG) */
-      map.loadImage("img/imprenta.png", (error, image) => {
-        if (error) throw error;
-        map.addImage("imprenta-icon", image);
-
-        /* CAPAS GEOJSON */
-        map.addSource("imprenta-espana", { type: "geojson", data: "data/espana.geojson" });
-        map.addLayer({
-          id: "imprenta-espana-puntos",
-          type: "symbol",
-          source: "imprenta-espana",
-          layout: {
-            "icon-image": "imprenta-icon",
-            "icon-size": 0.8,
-            "icon-allow-overlap": true
-          }
-        });
-
-        map.addSource("imprenta-europa", { type: "geojson", data: "data/europa.geojson" });
-        map.addLayer({
-          id: "imprenta-europa-puntos",
-          type: "symbol",
-          source: "imprenta-europa",
-          layout: {
-            "icon-image": "imprenta-icon",
-            "icon-size": 0.8,
-            "icon-allow-overlap": true
-          }
-        });
-
-        /* POPUPS */
-        const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
-
-        function generarHTML(props) {
-          let impresores = props.impresores_relevantes;
-          if (typeof impresores === "string") {
-            try { impresores = JSON.parse(impresores); }
-            catch { impresores = [impresores]; }
-          }
-          if (!Array.isArray(impresores)) impresores = [impresores];
-
-          let html = `
-            <div style="max-width:220px">
-              <h3>${props.nombre}</h3>
-              <p><strong>País:</strong> ${props.pais}</p>
-              <p><strong>Año:</strong> ${props.ano_llegada_imprenta}</p>
-              <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
-              <p>${props.nota}</p>
-          `;
-          if (props.imagen) html += `<img src="${props.imagen}" style="width:100%; border-radius:4px;">`;
-          html += `</div>`;
-          return html;
-        }
-
-        function cerrarPanelSiMovil() {
-          if (window.innerWidth <= 768) cerrarPanel();
-        }
-
-        /* EVENTOS ESPAÑA */
-        map.on("mouseenter", "imprenta-espana-puntos", (e) => {
-          map.getCanvas().style.cursor = "pointer";
-          popup.setLngLat(e.features[0].geometry.coordinates)
-               .setHTML(generarHTML(e.features[0].properties))
-               .addTo(map);
-        });
-        map.on("mouseleave", "imprenta-espana-puntos", () => {
-          map.getCanvas().style.cursor = "";
-          popup.remove();
-        });
-        map.on("click", "imprenta-espana-puntos", cerrarPanelSiMovil);
-
-        /* EVENTOS EUROPA */
-        map.on("mouseenter", "imprenta-europa-puntos", (e) => {
-          map.getCanvas().style.cursor = "pointer";
-          popup.setLngLat(e.features[0].geometry.coordinates)
-               .setHTML(generarHTML(e.features[0].properties))
-               .addTo(map);
-        });
-        map.on("mouseleave", "imprenta-europa-puntos", () => {
-          map.getCanvas().style.cursor = "";
-          popup.remove();
-        });
-        map.on("click", "imprenta-europa-puntos", cerrarPanelSiMovil);
-
-        /* TIMELINE */
-        fetch("data/timeline.json")
-          .then(r => r.json())
-          .then(datos => {
-            const cont = document.getElementById("timeline");
-
-            datos.timeline.forEach(item => {
-              const div = document.createElement("div");
-              div.className = "paso";
-              div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
-
-              div.addEventListener("click", () => {
-                map.flyTo({
-                  center: item.map_action.flyTo.center,
-                  zoom: item.map_action.flyTo.zoom,
-                  speed: 0.6
-                });
-                cerrarPanelSiMovil();
-              });
-
-              cont.appendChild(div);
-            });
-          });
+      /* CAPAS GEOJSON */
+      map.addSource("imprenta-espana", { type: "geojson", data: "data/espana.geojson" });
+      map.addLayer({
+        id: "imprenta-espana-puntos",
+        type: "circle",
+        source: "imprenta-espana",
+        paint: { "circle-radius": 8, "circle-color": "#8b5a2b" }
       });
+
+      map.addSource("imprenta-europa", { type: "geojson", data: "data/europa.geojson" });
+      map.addLayer({
+        id: "imprenta-europa-puntos",
+        type: "circle",
+        source: "imprenta-europa",
+        paint: { "circle-radius": 8, "circle-color": "#5a3a1a" }
+      });
+
+      /* POPUPS */
+      const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
+
+      function generarHTML(props) {
+        let impresores = props.impresores_relevantes;
+        if (typeof impresores === "string") {
+          try { impresores = JSON.parse(impresores); }
+          catch { impresores = [impresores]; }
+        }
+        if (!Array.isArray(impresores)) impresores = [impresores];
+
+        let html = `
+          <div style="max-width:220px">
+            <h3>${props.nombre}</h3>
+            <p><strong>País:</strong> ${props.pais}</p>
+            <p><strong>Año:</strong> ${props.ano_llegada_imprenta}</p>
+            <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
+            <p>${props.nota}</p>
+        `;
+        if (props.imagen) html += `<img src="${props.imagen}" style="width:100%; border-radius:4px;">`;
+        html += `</div>`;
+        return html;
+      }
+
+      function cerrarPanelSiMovil() {
+        if (window.innerWidth <= 768) cerrarPanel();
+      }
+
+      /* EVENTOS ESPAÑA */
+      map.on("mouseenter", "imprenta-espana-puntos", (e) => {
+        map.getCanvas().style.cursor = "pointer";
+        popup.setLngLat(e.features[0].geometry.coordinates)
+             .setHTML(generarHTML(e.features[0].properties))
+             .addTo(map);
+      });
+      map.on("mouseleave", "imprenta-espana-puntos", () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
+      map.on("click", "imprenta-espana-puntos", cerrarPanelSiMovil);
+
+      /* EVENTOS EUROPA */
+      map.on("mouseenter", "imprenta-europa-puntos", (e) => {
+        map.getCanvas().style.cursor = "pointer";
+        popup.setLngLat(e.features[0].geometry.coordinates)
+             .setHTML(generarHTML(e.features[0].properties))
+             .addTo(map);
+      });
+      map.on("mouseleave", "imprenta-europa-puntos", () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
+      map.on("click", "imprenta-europa-puntos", cerrarPanelSiMovil);
+
+      /* TIMELINE */
+      fetch("data/timeline.json")
+        .then(r => r.json())
+        .then(datos => {
+          const cont = document.getElementById("timeline");
+
+          datos.timeline.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "paso";
+            div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
+
+            div.addEventListener("click", () => {
+              map.flyTo({
+                center: item.map_action.flyTo.center,
+                zoom: item.map_action.flyTo.zoom,
+                speed: 0.6
+              });
+              cerrarPanelSiMovil();
+            });
+
+            cont.appendChild(div);
+          });
+        });
     });
   </script>
 </body>
