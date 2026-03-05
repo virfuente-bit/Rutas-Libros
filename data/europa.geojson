@@ -84,7 +84,7 @@
         "ano_llegada_imprenta": 1476,
         "impresores_relevantes": ["William Caxton"],
         "nota": "Introducción de la imprenta en Inglaterra.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg/640px-Palace_of_Westminster_from_the_dome_on_Methodist_Central_Hall.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Tower_of_London_White_Tower.jpg/1280px-Tower_of_London_White_Tower.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -93,6 +93,7 @@
     }
   ]
 }
+
 
 
 
