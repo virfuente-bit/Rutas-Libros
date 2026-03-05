@@ -105,14 +105,40 @@
       });
 
       function generarHTML(props) {
-        let html = `
-          <div style="max-width:220px">
-            <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
-            <p style="margin:4px 0;"><strong>País:</strong> ${props.pais}</p>
-            <p style="margin:4px 0;"><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
-            <p style="margin:4px 0;"><strong>Impresores:</strong> ${props.impresores_relevantes.join(", ")}</p>
-            <p style="margin:4px 0;">${props.nota}</p>
-        `;
+  // Normalizar impresores_relevantes
+  let impresores = props.impresores_relevantes;
+
+  // Si viene como string, intentar convertirlo a array
+  if (typeof impresores === "string") {
+    try {
+      impresores = JSON.parse(impresores);
+    } catch {
+      impresores = [impresores]; // si no es JSON válido, lo metemos en un array
+    }
+  }
+
+  // Si sigue sin ser array, lo convertimos
+  if (!Array.isArray(impresores)) {
+    impresores = [impresores];
+  }
+
+  let html = `
+    <div style="max-width:220px">
+      <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
+      <p style="margin:4px 0;"><strong>País:</strong> ${props.pais}</p>
+      <p style="margin:4px 0;"><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
+      <p style="margin:4px 0;"><strong>Impresores:</strong> ${impresores.join(", ")}</p>
+      <p style="margin:4px 0;">${props.nota}</p>
+  `;
+
+  if (props.imagen) {
+    html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
 
         if (props.imagen) {
           html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
@@ -180,3 +206,4 @@
   </script>
 </body>
 </html>
+
