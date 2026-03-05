@@ -21,8 +21,15 @@
   <!-- BOTÓN HAMBURGUESA -->
   <button id="toggle-panel" class="toggle-btn">☰</button>
 
+  <!-- OVERLAY SEMITRANSPARENTE -->
+  <div id="overlay"></div>
+
   <div id="contenedor">
     <div id="panel">
+
+      <!-- BOTÓN DE CERRAR DENTRO DEL PANEL -->
+      <button id="close-panel" class="close-btn">✕</button>
+
       <h2>Llegada de la Imprenta</h2>
       <div id="timeline"></div>
     </div>
@@ -32,11 +39,26 @@
 
   <script>
     /* ---------------------------------------------------------
-       BOTÓN PARA ABRIR/CERRAR PANEL EN MÓVIL
+       PANEL + OVERLAY
     --------------------------------------------------------- */
-    document.getElementById("toggle-panel").addEventListener("click", () => {
-      document.getElementById("panel").classList.toggle("open");
-    });
+    const panel = document.getElementById("panel");
+    const overlay = document.getElementById("overlay");
+    const toggleBtn = document.getElementById("toggle-panel");
+    const closeBtn = document.getElementById("close-panel");
+
+    function abrirPanel() {
+      panel.classList.add("open");
+      overlay.style.display = "block";
+    }
+
+    function cerrarPanel() {
+      panel.classList.remove("open");
+      overlay.style.display = "none";
+    }
+
+    toggleBtn.addEventListener("click", abrirPanel);
+    overlay.addEventListener("click", cerrarPanel);
+    closeBtn.addEventListener("click", cerrarPanel);
 
     /* ---------------------------------------------------------
        MAPA
@@ -150,6 +172,16 @@
         return html;
       }
 
+      /* ---------------------------------------------------------
+         CIERRE AUTOMÁTICO DEL PANEL AL TOCAR UN PUNTO
+      --------------------------------------------------------- */
+
+      function cerrarPanelSiMovil() {
+        if (window.innerWidth <= 768) {
+          cerrarPanel();
+        }
+      }
+
       /* ESPAÑA */
       map.on("mouseenter", "imprenta-espana-puntos", (e) => {
         map.getCanvas().style.cursor = "pointer";
@@ -165,6 +197,8 @@
         popup.remove();
       });
 
+      map.on("click", "imprenta-espana-puntos", cerrarPanelSiMovil);
+
       /* EUROPA */
       map.on("mouseenter", "imprenta-europa-puntos", (e) => {
         map.getCanvas().style.cursor = "pointer";
@@ -179,6 +213,8 @@
         map.getCanvas().style.cursor = "";
         popup.remove();
       });
+
+      map.on("click", "imprenta-europa-puntos", cerrarPanelSiMovil);
 
       /* ---------------------------------------------------------
          5) TIMELINE
@@ -199,6 +235,8 @@
                 zoom: item.map_action.flyTo.zoom,
                 speed: 0.6
               });
+
+              cerrarPanelSiMovil();
             });
 
             cont.appendChild(div);
