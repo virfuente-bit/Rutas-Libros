@@ -54,7 +54,7 @@
         "ano_llegada_imprenta": 1477,
         "impresores_relevantes": ["Meinardo Ungut", "Estanislao Polono"],
         "nota": "Centro impresor clave en la expansión hacia América.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/La_Giralda%2C_Seville%2C_Spain.jpg/640px-La_Giralda%2C_Seville%2C_Spain.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Giralda_de_Sevilla_%283%29.jpg/250px-Giralda_de_Sevilla_%283%29.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -63,3 +63,4 @@
     }
   ]
 }
+
