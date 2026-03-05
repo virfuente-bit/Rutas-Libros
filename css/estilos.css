@@ -1,18 +1,9 @@
-/* FUENTES */
-body.fuente-garamond {
-  font-family: "Garamond", "Georgia", serif;
-}
-
-body.fuente-ebgaramond {
-  font-family: "EB Garamond", serif;
-}
-
 body {
   margin: 0;
   padding: 0;
   font-family: "EB Garamond", serif;
-  background-color: #f4ecd8;
-  color: #2b2b2b;
+  background-color: #e8dcc0;
+  color: #3a2f1b;
 }
 
 #contenedor {
@@ -22,57 +13,19 @@ body {
 
 /* PANEL */
 #panel {
-  width: 320px;
+  width: 300px;
   padding: 20px;
-  background: #f7f1df;
-  border-right: 4px solid #3a2f1b;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.25);
+  background: #e6d8b8;
+  border-right: 4px solid #7a623a;
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.3);
   overflow-y: auto;
-  position: relative;
-  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 #panel h2 {
-  font-size: 26px;
+  font-size: 28px;
   margin-top: 0;
   text-align: center;
   color: #3a2f1b;
-  text-shadow: 0 0 1px #000;
-}
-
-/* BOTÓN CERRAR */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #3a2f1b;
-  color: #fffaf0;
-  border: none;
-  font-size: 20px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 1600;
-  transition: background 0.2s;
-}
-
-.close-btn:hover {
-  background: #5a4528;
-}
-
-/* SELECTORES */
-.fuente-contenedor,
-.modo-contenedor,
-.mapa-contenedor {
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-
-.fuente-contenedor label,
-.modo-contenedor label,
-.mapa-contenedor label {
-  display: block;
-  margin-bottom: 5px;
 }
 
 /* TIMELINE */
@@ -84,18 +37,16 @@ body {
 
 .paso {
   padding: 12px;
-  background: #fffaf0;
-  border: 1px solid #bfa77a;
+  background: #f5ebd2;
+  border: 1px solid #b08a4a;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.2s;
-  box-shadow: 0 0 4px rgba(0,0,0,0.15);
 }
 
 .paso:hover {
-  background: #fff4d6;
-  transform: scale(1.02);
-  border-color: #8c6f3c;
+  background: #f0e0b8;
+  border-color: #8b6a3c;
 }
 
 /* MAPA */
@@ -103,169 +54,31 @@ body {
   flex: 1;
   width: 100%;
   height: 100vh;
-  filter: grayscale(1) contrast(1.25) brightness(0.95);
+  filter: sepia(0.8) contrast(1.1) brightness(0.9);
 }
 
 /* POPUPS */
 .maplibregl-popup-content {
-  background: #fffaf0;
-  border: 1px solid #8c6f3c;
+  background: #f5ebd2;
+  border: 1px solid #b08a4a;
   border-radius: 4px;
   padding: 10px 14px;
 }
 
 .maplibregl-popup-tip {
-  border-top-color: #8c6f3c !important;
-}
-
-/* BOTÓN HAMBURGUESA */
-.toggle-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2000;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 8px 12px;
-  font-size: 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: none;
-}
-
-/* OVERLAY */
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.45);
-  z-index: 1400;
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-#overlay.visible {
-  opacity: 1;
-}
-
-/* MODO OSCURO */
-body.modo-oscuro {
-  background-color: #1e1e1e;
-  color: #e8e8e8;
-}
-
-body.modo-oscuro #panel {
-  background: #2a2a2a;
-  border-right-color: #555;
-}
-
-body.modo-oscuro .paso {
-  background: #333;
-  border-color: #666;
-  color: #eee;
-}
-
-body.modo-oscuro #map {
-  filter: grayscale(0.2) brightness(0.6) contrast(1.1);
-}
-
-/* MODO SEPIA */
-body.modo-sepia {
-  background-color: #f2e6c9;
-  color: #4b3b1f;
-}
-
-body.modo-sepia #panel {
-  background: #f0e2c2;
-  border-right-color: #8b6a3c;
-}
-
-body.modo-sepia #map {
-  filter: sepia(0.6) brightness(0.9);
-}
-
-/* MODO ALTO CONTRASTE */
-body.modo-alto {
-  background-color: #000;
-  color: #fff;
-}
-
-body.modo-alto #panel {
-  background: #000;
-  border-right-color: #fff;
-}
-
-body.modo-alto .paso {
-  background: #111;
-  border-color: #fff;
-  color: #fff;
-}
-
-body.modo-alto #map {
-  filter: contrast(2) brightness(1.2);
-}
-
-/* MODO ANTIGUO COMPLETO */
-body.modo-antiguo {
-  background-color: #e8dcc0;
-  color: #3a2f1b;
-}
-
-body.modo-antiguo #panel {
-  background: #e6d8b8;
-  border-right-color: #7a623a;
-  box-shadow: inset 0 0 25px rgba(0,0,0,0.3);
-}
-
-body.modo-antiguo .paso {
-  background: #f5ebd2;
-  border-color: #b08a4a;
-}
-
-body.modo-antiguo .paso:hover {
-  background: #f0e0b8;
-  border-color: #8b6a3c;
-}
-
-body.modo-antiguo .maplibregl-popup-content {
-  background: #f5ebd2;
-  border-color: #b08a4a;
-}
-
-body.modo-antiguo #map {
-  filter: sepia(0.8) contrast(1.1) brightness(0.9);
+  border-top-color: #b08a4a !important;
 }
 
 /* MÓVIL */
 @media (max-width: 768px) {
-
-  .toggle-btn {
-    display: block;
-  }
-
   #panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 260px;
-    height: 100%;
-    transform: translateX(-270px);
-    z-index: 1500;
-  }
-
-  #panel.open {
-    transform: translateX(0);
+    width: 100%;
+    height: 40vh;
+    border-right: none;
+    border-bottom: 4px solid #7a623a;
   }
 
   #map {
-    width: 100%;
-    height: 100vh;
-  }
-
-  #contenedor {
-    display: block;
+    height: 60vh;
   }
 }
