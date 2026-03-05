@@ -1,0 +1,61 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Segovia",
+        "pais": "España",
+        "ano_llegada_imprenta": 1472,
+        "impresores_relevantes": ["Juan Párix"],
+        "nota": "Primera imprenta de España"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.1184, 40.9481]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Barcelona",
+        "pais": "España",
+        "ano_llegada_imprenta": 1473,
+        "impresores_relevantes": ["Impresores alemanes"],
+        "nota": "Uno de los primeros focos urbanos"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.1734, 41.3851]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Valencia",
+        "pais": "España",
+        "ano_llegada_imprenta": 1473,
+        "impresores_relevantes": ["Lambert Palmart"],
+        "nota": "Centro clave en la Corona de Aragón"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.3763, 39.4699]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Sevilla",
+        "pais": "España",
+        "ano_llegada_imprenta": 1473,
+        "impresores_relevantes": ["Impresores alemanes"],
+        "nota": "Gran dinamismo comercial y cultural"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-5.9845, 37.3891]
+      }
+    }
+  ]
+}
