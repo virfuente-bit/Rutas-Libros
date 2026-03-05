@@ -51,14 +51,6 @@ body {
   background: #5a4528;
 }
 
-/* INTERRUPTOR MODO OSCURO */
-.modo-oscuro-toggle {
-  display: block;
-  margin-bottom: 15px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
 /* TIMELINE */
 #timeline {
   display: flex;
@@ -145,39 +137,6 @@ body {
   opacity: 1;
 }
 
-/* MODO OSCURO */
-body.modo-oscuro {
-  background-color: #1e1e1e;
-  color: #e8e8e8;
-}
-
-body.modo-oscuro #panel {
-  background: #2a2a2a;
-  border-right-color: #555;
-  box-shadow: inset 0 0 25px rgba(255,255,255,0.05);
-}
-
-body.modo-oscuro .paso {
-  background: #333;
-  border-color: #666;
-  color: #eee;
-}
-
-body.modo-oscuro .paso:hover {
-  background: #3d3d3d;
-  border-color: #888;
-}
-
-body.modo-oscuro .maplibregl-popup-content {
-  background: #2a2a2a;
-  color: #eee;
-  border-color: #666;
-}
-
-body.modo-oscuro #map {
-  filter: grayscale(0.2) brightness(0.6) contrast(1.1);
-}
-
 /* MÓVIL */
 @media (max-width: 768px) {
 
@@ -208,4 +167,5 @@ body.modo-oscuro #map {
     display: block;
   }
 }
+
 
