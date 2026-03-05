@@ -9,7 +9,7 @@
         "ano_llegada_imprenta": 1472,
         "impresores_relevantes": ["Juan Párix"],
         "nota": "Primera imprenta documentada en la Península Ibérica.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Acueducto_de_Segovia_16.jpg"
+       "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Aqueduct_of_Segovia_02.jpg/1280px-Aqueduct_of_Segovia_02.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -63,3 +63,4 @@
     }
   ]
 }
+
