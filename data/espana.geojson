@@ -24,7 +24,7 @@
         "ano_llegada_imprenta": 1473,
         "impresores_relevantes": ["Juan de Salzburgo", "Pablo Hurus"],
         "nota": "Uno de los primeros centros impresores de la Península.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5c/1_barcelona_skyline_2013.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/%CE%A3%CE%B1%CE%B3%CF%81%CE%AC%CE%B4%CE%B1_%CE%A6%CE%B1%CE%BC%CE%AF%CE%BB%CE%B9%CE%B1_2941_%28cropped%29.jpg/960px-%CE%A3%CE%B1%CE%B3%CF%81%CE%AC%CE%B4%CE%B1_%CE%A6%CE%B1%CE%BC%CE%AF%CE%BB%CE%B9%CE%B1_2941_%28cropped%29.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -63,4 +63,5 @@
     }
   ]
 }
+
 
