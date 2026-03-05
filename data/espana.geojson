@@ -9,7 +9,7 @@
         "ano_llegada_imprenta": 1472,
         "impresores_relevantes": ["Juan Párix"],
         "nota": "Primera imprenta documentada en la Península Ibérica.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Acueducto_de_Segovia_02.jpg/640px-Acueducto_de_Segovia_02.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Acueducto_de_Segovia_16.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -24,7 +24,7 @@
         "ano_llegada_imprenta": 1473,
         "impresores_relevantes": ["Juan de Salzburgo", "Pablo Hurus"],
         "nota": "Uno de los primeros centros impresores de la Península.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Sagrada_Familia_01.jpg/640px-Sagrada_Familia_01.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5c/1_barcelona_skyline_2013.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -39,7 +39,7 @@
         "ano_llegada_imprenta": 1474,
         "impresores_relevantes": ["Lambert Palmart"],
         "nota": "Impresión temprana de obras religiosas y humanistas.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies%2C_Val%C3%A8ncia%2C_Espa%C3%B1a%2C_2014-06-30%2C_DD_01.JPG/640px-Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies%2C_Val%C3%A8ncia%2C_Espa%C3%B1a%2C_2014-06-30%2C_DD_01.JPG"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Valencia_Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies_2013.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -63,6 +63,3 @@
     }
   ]
 }
-
-
-
