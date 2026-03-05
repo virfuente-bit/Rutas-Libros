@@ -51,17 +51,12 @@ body {
   background: #5a4528;
 }
 
-/* SELECTORES */
-.modo-contenedor,
-.mapa-contenedor {
+/* INTERRUPTOR MODO OSCURO */
+.modo-oscuro-toggle {
+  display: block;
   margin-bottom: 15px;
   font-size: 16px;
-}
-
-.modo-contenedor label,
-.mapa-contenedor label {
-  display: block;
-  margin-bottom: 5px;
+  cursor: pointer;
 }
 
 /* TIMELINE */
@@ -103,6 +98,16 @@ body {
 
 .maplibregl-popup-tip {
   border-top-color: #8c6f3c !important;
+}
+
+/* SCROLL */
+#panel::-webkit-scrollbar {
+  width: 10px;
+}
+
+#panel::-webkit-scrollbar-thumb {
+  background: #8c6f3c;
+  border-radius: 5px;
 }
 
 /* BOTÓN HAMBURGUESA */
@@ -147,6 +152,7 @@ body.modo-oscuro {
 body.modo-oscuro #panel {
   background: #2a2a2a;
   border-right-color: #555;
+  box-shadow: inset 0 0 25px rgba(255,255,255,0.05);
 }
 
 body.modo-oscuro .paso {
@@ -155,44 +161,19 @@ body.modo-oscuro .paso {
   color: #eee;
 }
 
+body.modo-oscuro .paso:hover {
+  background: #3d3d3d;
+  border-color: #888;
+}
+
+body.modo-oscuro .maplibregl-popup-content {
+  background: #2a2a2a;
+  color: #eee;
+  border-color: #666;
+}
+
 body.modo-oscuro #map {
   filter: grayscale(0.2) brightness(0.6) contrast(1.1);
-}
-
-/* MODO SEPIA */
-body.modo-sepia {
-  background-color: #f2e6c9;
-  color: #4b3b1f;
-}
-
-body.modo-sepia #panel {
-  background: #f0e2c2;
-  border-right-color: #8b6a3c;
-}
-
-body.modo-sepia #map {
-  filter: sepia(0.6) brightness(0.9);
-}
-
-/* MODO ALTO CONTRASTE */
-body.modo-alto {
-  background-color: #000;
-  color: #fff;
-}
-
-body.modo-alto #panel {
-  background: #000;
-  border-right-color: #fff;
-}
-
-body.modo-alto .paso {
-  background: #111;
-  border-color: #fff;
-  color: #fff;
-}
-
-body.modo-alto #map {
-  filter: contrast(2) brightness(1.2);
 }
 
 /* MÓVIL */
