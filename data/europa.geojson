@@ -39,7 +39,7 @@
         "ano_llegada_imprenta": 1469,
         "impresores_relevantes": ["Aldo Manuzio"],
         "nota": "Uno de los mayores centros impresores del Renacimiento.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Venice_Grand_Canal_2017.jpg/640px-Venice_Grand_Canal_2017.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/%28Venice%29_Ca%27_Foscari.jpg/960px-%28Venice%29_Ca%27_Foscari.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -54,7 +54,7 @@
         "ano_llegada_imprenta": 1470,
         "impresores_relevantes": ["Ulrich Gering"],
         "nota": "Uno de los primeros focos impresores europeos.",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Paris_Night.jpg/640px-Paris_Night.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Notre_Dame_%2839898572641%29.jpg/1280px-Notre_Dame_%2839898572641%29.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -93,6 +93,7 @@
     }
   ]
 }
+
 
 
 
