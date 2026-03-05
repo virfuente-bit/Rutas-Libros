@@ -24,7 +24,7 @@
         "ano_llegada_imprenta": 1459,
         "impresores_relevantes": ["Albrecht Pfister"],
         "nota": "Uno de los primeros impresores en usar tipos móviles en Alemania.",
-        "imagen": "https://commons.wikimedia.org/wiki/File:Wasserschloss-Villa-Concordia-P3100010.jpg"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Wasserschloss-Villa-Concordia-P3100010.jpg"
       },
       "geometry": {
         "type": "Point",
@@ -93,6 +93,7 @@
     }
   ]
 }
+
 
 
 
