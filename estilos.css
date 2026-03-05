@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Garamond", "Georgia", serif;
+  background-color: #f4ecd8;
+  color: #2b2b2b;
+}
+
+#contenedor {
+  display: flex;
+  height: 100vh;
+}
+
+#panel {
+  width: 320px;
+  padding: 20px;
+  background: #f7f1df;
+  border-right: 4px solid #3a2f1b;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+}
+
+#panel h2 {
+  font-family: "Garamond", serif;
+  font-size: 26px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: #3a2f1b;
+  text-shadow: 0 0 1px #000;
+}
+
+#timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.paso {
+  padding: 12px;
+  background: #fffaf0;
+  border: 1px solid #bfa77a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+}
+
+.paso:hover {
+  background: #fff4d6;
+  transform: scale(1.02);
+  border-color: #8c6f3c;
+}
+
+#map {
+  flex: 1;
+  position: relative;
+  filter: grayscale(1) contrast(1.25) brightness(0.95);
+  background-color: #f2ead6;
+}
+
+.maplibregl-popup-content {
+  font-family: "Garamond", serif;
+  background: #fffaf0;
+  border: 1px solid #8c6f3c;
+  border-radius: 4px;
+  padding: 10px 14px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+.maplibregl-popup-tip {
+  border-top-color: #8c6f3c !important;
+}
+
+#panel::-webkit-scrollbar {
+  width: 10px;
+}
+
+#panel::-webkit-scrollbar-track {
+  background: #f7f1df;
+}
+
+#panel::-webkit-scrollbar-thumb {
+  background: #8c6f3c;
+  border-radius: 5px;
+}
+
+#panel::-webkit-scrollbar-thumb:hover {
+  background: #6e532c;
+}

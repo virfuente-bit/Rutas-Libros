@@ -1,0 +1,103 @@
+{
+  "timeline": [
+    {
+      "year": 1450,
+      "city": "Maguncia",
+      "country": "Alemania",
+      "printers": ["Johannes Gutenberg"],
+      "note": "Inicio de la imprenta en Europa",
+      "map_action": {
+        "flyTo": { "center": [8.2473, 49.9929], "zoom": 5 },
+        "highlight": "Maguncia"
+      }
+    },
+    {
+      "year": 1455,
+      "city": "Bamberg",
+      "country": "Alemania",
+      "printers": ["Albrecht Pfister"],
+      "note": "Primeros impresos ilustrados",
+      "map_action": {
+        "flyTo": { "center": [10.8903, 49.8987], "zoom": 5 },
+        "highlight": "Bamberg"
+      }
+    },
+    {
+      "year": 1467,
+      "city": "Roma",
+      "country": "Italia",
+      "printers": ["Conrad Sweynheym", "Arnold Pannartz"],
+      "note": "Uno de los primeros centros impresores italianos",
+      "map_action": {
+        "flyTo": { "center": [12.4964, 41.9028], "zoom": 5 },
+        "highlight": "Roma"
+      }
+    },
+    {
+      "year": 1469,
+      "city": "Venecia",
+      "country": "Italia",
+      "printers": ["Johannes de Spira", "Aldo Manuzio"],
+      "note": "Principal centro editorial del Renacimiento",
+      "map_action": {
+        "flyTo": { "center": [12.3155, 45.4408], "zoom": 5 },
+        "highlight": "Venecia"
+      }
+    },
+    {
+      "year": 1470,
+      "city": "París",
+      "country": "Francia",
+      "printers": ["Ulrich Gering", "Michael Friburger", "Martin Crantz"],
+      "note": "Primer taller francés documentado",
+      "map_action": {
+        "flyTo": { "center": [2.3522, 48.8566], "zoom": 5 },
+        "highlight": "París"
+      }
+    },
+    {
+      "year": 1472,
+      "city": "Segovia",
+      "country": "España",
+      "printers": ["Juan Párix"],
+      "note": "Primera imprenta de España",
+      "map_action": {
+        "flyTo": { "center": [-4.1184, 40.9481], "zoom": 5 },
+        "highlight": "Segovia"
+      }
+    },
+    {
+      "year": 1473,
+      "city": "Barcelona",
+      "country": "España",
+      "printers": ["Impresores alemanes"],
+      "note": "Uno de los primeros focos urbanos",
+      "map_action": {
+        "flyTo": { "center": [2.1734, 41.3851], "zoom": 5 },
+        "highlight": "Barcelona"
+      }
+    },
+    {
+      "year": 1473,
+      "city": "Valencia",
+      "country": "España",
+      "printers": ["Lambert Palmart"],
+      "note": "Centro clave en la Corona de Aragón",
+      "map_action": {
+        "flyTo": { "center": [-0.3763, 39.4699], "zoom": 5 },
+        "highlight": "Valencia"
+      }
+    },
+    {
+      "year": 1473,
+      "city": "Sevilla",
+      "country": "España",
+      "printers": ["Impresores alemanes"],
+      "note": "Gran dinamismo comercial y cultural",
+      "map_action": {
+        "flyTo": { "center": [-5.9845, 37.3891], "zoom": 5 },
+        "highlight": "Sevilla"
+      }
+    }
+  ]
+}

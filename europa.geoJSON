@@ -1,0 +1,75 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Maguncia",
+        "pais": "Alemania",
+        "ano_llegada_imprenta": 1450,
+        "impresores_relevantes": ["Johannes Gutenberg"],
+        "nota": "Inicio de la imprenta en Europa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.2473, 49.9929]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Bamberg",
+        "pais": "Alemania",
+        "ano_llegada_imprenta": 1455,
+        "impresores_relevantes": ["Albrecht Pfister"],
+        "nota": "Primeros impresos ilustrados"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.8903, 49.8987]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Venecia",
+        "pais": "Italia",
+        "ano_llegada_imprenta": 1469,
+        "impresores_relevantes": ["Johannes de Spira", "Aldo Manuzio"],
+        "nota": "Principal centro editorial del Renacimiento"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.3155, 45.4408]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "París",
+        "pais": "Francia",
+        "ano_llegada_imprenta": 1470,
+        "impresores_relevantes": ["Ulrich Gering", "Michael Friburger", "Martin Crantz"],
+        "nota": "Primer taller francés documentado"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3522, 48.8566]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre": "Roma",
+        "pais": "Italia",
+        "ano_llegada_imprenta": 1467,
+        "impresores_relevantes": ["Conrad Sweynheym", "Arnold Pannartz"],
+        "nota": "Uno de los primeros centros impresores italianos"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.4964, 41.9028]
+      }
+    }
+  ]
+}
