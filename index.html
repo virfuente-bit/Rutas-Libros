@@ -64,23 +64,23 @@
     const map = new maplibregl.Map({
       container: "map",
       style: {
-  version: 8,
-  glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-  sources: {
-    base: {
-      type: "raster",
-      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-      tileSize: 256
-    }
-  },
-  layers: [
-    {
-      id: "base-layer",
-      type: "raster",
-      source: "base"
-    }
-  ]
-},
+        version: 8,
+        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+        sources: {
+          base: {
+            type: "raster",
+            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+            tileSize: 256
+          }
+        },
+        layers: [
+          {
+            id: "base-layer",
+            type: "raster",
+            source: "base"
+          }
+        ]
+      },
       center: [-3.7, 40.4],
       zoom: 4
     });
@@ -140,7 +140,7 @@
         layout: {
           "text-field": ["get", "orden"],
           "text-size": 18,
-          "text-font": ["Open Sans Bold"],
+          "text-font": ["Open Sans Regular"],
           "text-anchor": "center"
         },
         paint: {
@@ -165,7 +165,7 @@
         layout: {
           "text-field": ["get", "orden"],
           "text-size": 18,
-          "text-font": ["Open Sans Bold"],
+          "text-font": ["Open Sans Regular"],
           "text-anchor": "center"
         },
         paint: {
@@ -229,4 +229,5 @@
   </script>
 </body>
 </html>
+
 
