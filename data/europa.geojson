@@ -8,7 +8,7 @@
         "pais": "Alemania",
         "ano_llegada_imprenta": 1450,
         "impresores_relevantes": ["Johannes Gutenberg"],
-        "nota": "Cuna de la imprenta moderna.",
+        "nota": "Cuna de la imprenta. Aquí Gutenberg desarrolló la tipografía móvil metálica.",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Mainz_altstadt.jpg/250px-Mainz_altstadt.jpg"
       },
       "geometry": {
@@ -23,7 +23,7 @@
         "pais": "Alemania",
         "ano_llegada_imprenta": 1459,
         "impresores_relevantes": ["Albrecht Pfister"],
-        "nota": "Uno de los primeros impresores en usar tipos móviles en Alemania.",
+        "nota": "Uno de los primeros centros impresores tras Maguncia. Producción temprana de biblias y textos religiosos.",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Wasserschloss-Villa-Concordia-P3100010.jpg"
       },
       "geometry": {
@@ -38,7 +38,7 @@
         "pais": "Italia",
         "ano_llegada_imprenta": 1469,
         "impresores_relevantes": ["Aldo Manuzio"],
-        "nota": "Uno de los mayores centros impresores del Renacimiento.",
+        "nota": "Se convierte en el mayor centro impresor del siglo XV. Hogar de Aldo Manuzio.",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/%28Venice%29_Ca%27_Foscari.jpg/960px-%28Venice%29_Ca%27_Foscari.jpg"
       },
       "geometry": {
@@ -53,7 +53,7 @@
         "pais": "Francia",
         "ano_llegada_imprenta": 1470,
         "impresores_relevantes": ["Ulrich Gering"],
-        "nota": "Uno de los primeros focos impresores europeos.",
+        "nota": "La Sorbona impulsa la llegada de la imprenta. Gran producción de textos universitarios.",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Notre_Dame_%2839898572641%29.jpg/1280px-Notre_Dame_%2839898572641%29.jpg"
       },
       "geometry": {
@@ -68,7 +68,7 @@
         "pais": "Italia",
         "ano_llegada_imprenta": 1467,
         "impresores_relevantes": ["Conrad Sweynheym", "Arnold Pannartz"],
-        "nota": "Imprenta temprana ligada al Vaticano.",
+        "nota": "La imprenta llega a Italia. Sweynheym y Pannartz introducen la tipografía romana. Ligada al Vaticano.",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Plastico_E.U.R._rom_marts_2003.jpg/960px-Plastico_E.U.R._rom_marts_2003.jpg"
       },
       "geometry": {
@@ -83,7 +83,7 @@
         "pais": "Reino Unido",
         "ano_llegada_imprenta": 1476,
         "impresores_relevantes": ["William Caxton"],
-        "nota": "Introducción de la imprenta en Inglaterra.",
+        "nota": "Introducción de la imprenta en Inglaterra. William Caxton introduce la imprenta en Inglaterra tras formarse en los Países Bajos. Su taller en Westminster impulsa la producción de obras en inglés medio.",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Tower_of_London_White_Tower.jpg/1280px-Tower_of_London_White_Tower.jpg"
       },
       "geometry": {
@@ -93,6 +93,7 @@
     }
   ]
 }
+
 
 
 
