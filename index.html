@@ -39,7 +39,6 @@
     const panel = document.getElementById("panel");
     const overlay = document.getElementById("overlay");
     const toggleBtn = document.getElementById("toggle-panel");
-    const closeBtn = document.getElementById("close-panel");
 
     function abrirPanel() {
       panel.classList.add("open");
@@ -53,30 +52,28 @@
       setTimeout(() => overlay.style.display = "none", 300);
     }
 
-    // Cambiar icono al abrir/cerrar panel
-function actualizarFlecha() {
-  if (panel.classList.contains("open")) {
-    toggleBtn.textContent = "◀";   // flecha hacia la izquierda (cerrar)
-  } else {
-    toggleBtn.textContent = "▶";   // flecha hacia la derecha (abrir)
-  }
-}
-    
+    /* Cambiar flecha según estado */
+    function actualizarFlecha() {
+      if (panel.classList.contains("open")) {
+        toggleBtn.textContent = "◀";   // cerrar panel
+      } else {
+        toggleBtn.textContent = "▶";   // abrir panel
+      }
+    }
+
     toggleBtn.addEventListener("click", () => {
-  abrirPanel();
-  actualizarFlecha();
-});
+      if (panel.classList.contains("open")) {
+        cerrarPanel();
+      } else {
+        abrirPanel();
+      }
+      actualizarFlecha();
+    });
 
-closeBtn.addEventListener("click", () => {
-  cerrarPanel();
-  actualizarFlecha();
-});
-
-overlay.addEventListener("click", () => {
-  cerrarPanel();
-  actualizarFlecha();
-});
-
+    overlay.addEventListener("click", () => {
+      cerrarPanel();
+      actualizarFlecha();
+    });
 
     /* MAPA — estilo mínimo + raster OSM */
     const map = new maplibregl.Map({
@@ -214,6 +211,3 @@ overlay.addEventListener("click", () => {
   </script>
 </body>
 </html>
-
-
-
