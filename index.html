@@ -25,50 +25,51 @@
   <div id="overlay"></div>
 
   <div id="contenedor">
+
+    <!-- PANEL LATERAL -->
     <div id="panel">
 
-      <div id="panel">
+      <!-- INTRODUCCIÓN HISTÓRICA -->
+      <div id="intro">
+        <h3>La expansión de la imprenta</h3>
+        <p>
+          La imprenta, nacida en la ciudad alemana de Maguncia hacia 1450, transformó para siempre la circulación del conocimiento en Europa. En apenas tres décadas, el nuevo arte tipográfico se extendió por los principales centros comerciales, universitarios y religiosos del continente.
+        </p>
+        <p>
+          Desde los talleres pioneros del valle del Rin hasta las prensas humanistas de Italia y Francia, la imprenta viajó siguiendo las rutas del comercio, las redes intelectuales y la demanda creciente de libros.
+        </p>
+        <p>
+          A partir de 1472, el nuevo invento cruzó los Pirineos y comenzó a arraigar en las ciudades españolas, donde universidades, catedrales y mercaderes impulsaron su rápida expansión.
+        </p>
+        <p>
+          Este recorrido interactivo muestra, paso a paso, cómo se difundió la imprenta por Europa y cómo llegó finalmente a España.
+        </p>
+      </div>
 
-  <!-- INTRODUCCIÓN HISTÓRICA -->
-  <div id="intro">
-    <h3>La expansión de la imprenta</h3>
-    <p>
-      La imprenta, nacida en la ciudad alemana de Maguncia hacia 1450, transformó para siempre la circulación del conocimiento en Europa. En apenas tres décadas, el nuevo arte tipográfico se extendió por los principales centros comerciales, universitarios y religiosos del continente.
-    </p>
-    <p>
-      Desde los talleres pioneros del valle del Rin hasta las prensas humanistas de Italia y Francia, la imprenta viajó siguiendo las rutas del comercio, las redes intelectuales y la demanda creciente de libros.
-    </p>
-    <p>
-      A partir de 1472, el nuevo invento cruzó los Pirineos y comenzó a arraigar en las ciudades españolas, donde universidades, catedrales y mercaderes impulsaron su rápida expansión.
-    </p>
-    <p>
-      Este recorrido interactivo muestra, paso a paso, cómo se difundió la imprenta por Europa y cómo llegó finalmente a España.
-    </p>
-  </div>
+      <!-- TIMELINE -->
+      <h2>Llegada de la Imprenta</h2>
+      <div id="timeline"></div>
 
-  <!-- TIMELINE -->
-  <h2>Llegada de la Imprenta</h2>
-  <div id="timeline"></div>
+      <!-- CIERRE NARRATIVO -->
+      <div id="cierre">
+        <h3>Conclusión</h3>
+        <p>
+          La llegada de la imprenta a España no fue un hecho aislado, sino el resultado de un proceso europeo más amplio. Los impresores que trabajaron en Segovia, Valencia, Barcelona o Sevilla formaban parte de una red internacional de artesanos, comerciantes y humanistas que compartían técnicas, tipos móviles y modelos editoriales.
+        </p>
+        <p>
+          En pocas décadas, la península se integró plenamente en la cultura impresa europea, contribuyendo a la difusión de obras religiosas, jurídicas, literarias y científicas que marcaron el inicio de la Edad Moderna.
+        </p>
+        <p>
+          La historia de la imprenta es, en definitiva, la historia de cómo el conocimiento comenzó a multiplicarse y a viajar más rápido que nunca.
+        </p>
+      </div>
 
-  <!-- CIERRE NARRATIVO -->
-  <div id="cierre">
-    <h3>Conclusión</h3>
-    <p>
-      La llegada de la imprenta a España no fue un hecho aislado, sino el resultado de un proceso europeo más amplio. Los impresores que trabajaron en Segovia, Valencia, Barcelona o Sevilla formaban parte de una red internacional de artesanos, comerciantes y humanistas que compartían técnicas, tipos móviles y modelos editoriales.
-    </p>
-    <p>
-      En pocas décadas, la península se integró plenamente en la cultura impresa europea, contribuyendo a la difusión de obras religiosas, jurídicas, literarias y científicas que marcaron el inicio de la Edad Moderna.
-    </p>
-    <p>
-      La historia de la imprenta es, en definitiva, la historia de cómo el conocimiento comenzó a multiplicarse y a viajar más rápido que nunca.
-    </p>
-  </div>
+    </div> <!-- FIN DEL PANEL -->
 
-</div>
-
-
+    <!-- MAPA -->
     <div id="map"></div>
-  </div>
+
+  </div> <!-- FIN DEL CONTENEDOR -->
 
   <script>
     /* PANEL + OVERLAY */
@@ -88,21 +89,12 @@
       setTimeout(() => overlay.style.display = "none", 300);
     }
 
-    /* Cambiar flecha según estado */
     function actualizarFlecha() {
-      if (panel.classList.contains("open")) {
-        toggleBtn.textContent = "◀";   // cerrar panel
-      } else {
-        toggleBtn.textContent = "▶";   // abrir panel
-      }
+      toggleBtn.textContent = panel.classList.contains("open") ? "◀" : "▶";
     }
 
     toggleBtn.addEventListener("click", () => {
-      if (panel.classList.contains("open")) {
-        cerrarPanel();
-      } else {
-        abrirPanel();
-      }
+      panel.classList.contains("open") ? cerrarPanel() : abrirPanel();
       actualizarFlecha();
     });
 
@@ -111,7 +103,7 @@
       actualizarFlecha();
     });
 
-    /* MAPA — estilo mínimo + raster OSM */
+    /* MAPA */
     const map = new maplibregl.Map({
       container: "map",
       style: {
@@ -245,6 +237,6 @@
       activarPopups("imprenta-europa-circulos");
     });
   </script>
+
 </body>
 </html>
-
