@@ -91,7 +91,6 @@ body {
   left: 10px;
   z-index: 2000;
 
-  /* NUEVO ESTILO */
   background: #fff4d6;          /* crema suave */
   border: 1px solid #8c3f2f;    /* marrón */
   color: #8c3f2f;               /* marrón de los círculos */
@@ -104,7 +103,7 @@ body {
 
 /* HOVER DE LA FLECHA */
 .toggle-btn:hover {
-  background: #f0e0c0;          /* marrón crema más intenso */
+  background: #f0e0c0;          /* crema más intensa */
   color: #6f2f22;               /* marrón más oscuro */
   transform: scale(1.08);       /* pequeño efecto “pop” */
 }
