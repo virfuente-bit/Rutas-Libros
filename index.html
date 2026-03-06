@@ -86,55 +86,45 @@
 
     /* DICCIONARIO PARA NUMERACIÓN */
     let ordenPorCiudad = {};
-    let timelineListo = false;
 
-    /* TIMELINE + NUMERACIÓN */
-    fetch("data/timeline.json")
-      .then(r => r.json())
-      .then(datos => {
-        const cont = document.getElementById("timeline");
-
-        datos.timeline.forEach((item, index) => {
-          const numero = index + 1;
-
-          ordenPorCiudad[item.city] = numero;
-
-          const div = document.createElement("div");
-          div.className = "paso";
-          div.innerHTML = `<strong>${numero}. ${item.city}</strong> (${item.year})<br>${item.note}`;
-
-          div.addEventListener("click", () => {
-            map.flyTo({
-              center: item.map_action.flyTo.center,
-              zoom: item.map_action.flyTo.zoom,
-              speed: 0.6
-            });
-            if (window.innerWidth <= 768) cerrarPanel();
-          });
-
-          cont.appendChild(div);
-        });
-
-        timelineListo = true;
-      });
-
-    /* FUNCIÓN PARA ESPERAR A QUE EL TIMELINE TERMINE */
-    function esperarTimeline() {
+    /* PROMESA PARA CARGAR EL TIMELINE */
+    function cargarTimeline() {
       return new Promise(resolve => {
-        const check = () => {
-          if (timelineListo) resolve();
-          else setTimeout(check, 50);
-        };
-        check();
+        fetch("data/timeline.json")
+          .then(r => r.json())
+          .then(datos => {
+            const cont = document.getElementById("timeline");
+
+            datos.timeline.forEach((item, index) => {
+              const numero = index + 1;
+
+              ordenPorCiudad[item.city] = numero;
+
+              const div = document.createElement("div");
+              div.className = "paso";
+              div.innerHTML = `<strong>${numero}. ${item.city}</strong> (${item.year})<br>${item.note}`;
+
+              div.addEventListener("click", () => {
+                map.flyTo({
+                  center: item.map_action.flyTo.center,
+                  zoom: item.map_action.flyTo.zoom,
+                  speed: 0.6
+                });
+                if (window.innerWidth <= 768) cerrarPanel();
+              });
+
+              cont.appendChild(div);
+            });
+
+            resolve();
+          });
       });
     }
 
-    map.on("load", async function () {
+    /* CARGA GEOJSON + AÑADE CAPAS */
+    async function cargarCapas() {
 
-      /* ESPERAR A QUE EL TIMELINE ESTÉ LISTO */
-      await esperarTimeline();
-
-      /* CAPA ESPAÑA */
+      /* ESPAÑA */
       const espana = await fetch("data/espana.geojson").then(r => r.json());
       espana.features.forEach(f => {
         f.properties.orden = ordenPorCiudad[f.properties.nombre] || null;
@@ -159,7 +149,7 @@
         }
       });
 
-      /* CAPA EUROPA */
+      /* EUROPA */
       const europa = await fetch("data/europa.geojson").then(r => r.json());
       europa.features.forEach(f => {
         f.properties.orden = ordenPorCiudad[f.properties.nombre] || null;
@@ -228,7 +218,12 @@
 
       activarPopups("imprenta-espana-numeros");
       activarPopups("imprenta-europa-numeros");
+    }
 
+    /* ORDEN CORRECTO DE CARGA */
+    map.on("load", async () => {
+      await cargarTimeline();
+      await cargarCapas();
     });
   </script>
 </body>
