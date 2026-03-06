@@ -86,6 +86,7 @@
 
     /* DICCIONARIO PARA NUMERACIÓN */
     let ordenPorCiudad = {};
+    let timelineCargado = false;
 
     /* TIMELINE + NUMERACIÓN */
     fetch("data/timeline.json")
@@ -94,12 +95,10 @@
         const cont = document.getElementById("timeline");
 
         datos.timeline.forEach((item, index) => {
-          const numero = index + 1; // 1,2,3...
+          const numero = index + 1;
 
-          // Guardamos el número asociado a la ciudad
           ordenPorCiudad[item.city] = numero;
 
-          // Construcción del timeline visual
           const div = document.createElement("div");
           div.className = "paso";
           div.innerHTML = `<strong>${numero}. ${item.city}</strong> (${item.year})<br>${item.note}`;
@@ -115,113 +114,124 @@
 
           cont.appendChild(div);
         });
+
+        timelineCargado = true;
       });
+
+    /* ESPERAR A QUE EL TIMELINE ESTÉ LISTO ANTES DE CARGAR GEOJSON */
+    function esperarTimeline(callback) {
+      if (timelineCargado) callback();
+      else setTimeout(() => esperarTimeline(callback), 50);
+    }
 
     map.on("load", function () {
 
-      /* CAPA ESPAÑA */
-      fetch("data/espana.geojson")
-        .then(r => r.json())
-        .then(geo => {
-          geo.features.forEach(f => {
-            const ciudad = f.properties.nombre;
-            f.properties.orden = ordenPorCiudad[ciudad] || null;
+      esperarTimeline(() => {
+
+        /* CAPA ESPAÑA */
+        fetch("data/espana.geojson")
+          .then(r => r.json())
+          .then(geo => {
+            geo.features.forEach(f => {
+              const ciudad = f.properties.nombre;
+              f.properties.orden = ordenPorCiudad[ciudad] || null;
+            });
+
+            map.addSource("imprenta-espana", { type: "geojson", data: geo });
+
+            map.addLayer({
+              id: "imprenta-espana-numeros",
+              type: "symbol",
+              source: "imprenta-espana",
+              layout: {
+                "text-field": ["get", "orden"],
+                "text-size": 18,
+                "text-font": ["Open Sans Bold"],
+                "text-anchor": "center"
+              },
+              paint: {
+                "text-color": "#3a2a1a",
+                "text-halo-color": "#fffaf0",
+                "text-halo-width": 2
+              }
+            });
           });
 
-          map.addSource("imprenta-espana", { type: "geojson", data: geo });
+        /* CAPA EUROPA */
+        fetch("data/europa.geojson")
+          .then(r => r.json())
+          .then(geo => {
+            geo.features.forEach(f => {
+              const ciudad = f.properties.nombre;
+              f.properties.orden = ordenPorCiudad[ciudad] || null;
+            });
 
-          map.addLayer({
-            id: "imprenta-espana-numeros",
-            type: "symbol",
-            source: "imprenta-espana",
-            layout: {
-              "text-field": ["get", "orden"],
-              "text-size": 18,
-              "text-font": ["Open Sans Bold"],
-              "text-anchor": "center"
-            },
-            paint: {
-              "text-color": "#3a2a1a",
-              "text-halo-color": "#fffaf0",
-              "text-halo-width": 2
-            }
+            map.addSource("imprenta-europa", { type: "geojson", data: geo });
+
+            map.addLayer({
+              id: "imprenta-europa-numeros",
+              type: "symbol",
+              source: "imprenta-europa",
+              layout: {
+                "text-field": ["get", "orden"],
+                "text-size": 18,
+                "text-font": ["Open Sans Bold"],
+                "text-anchor": "center"
+              },
+              paint: {
+                "text-color": "#3a2a1a",
+                "text-halo-color": "#fffaf0",
+                "text-halo-width": 2
+              }
+            });
           });
+
+        /* POPUPS */
+        const popup = new maplibregl.Popup({
+          closeButton: false,
+          closeOnClick: false
         });
 
-      /* CAPA EUROPA */
-      fetch("data/europa.geojson")
-        .then(r => r.json())
-        .then(geo => {
-          geo.features.forEach(f => {
-            const ciudad = f.properties.nombre;
-            f.properties.orden = ordenPorCiudad[ciudad] || null;
+        function generarHTML(props) {
+          let impresores = props.impresores_relevantes;
+          if (typeof impresores === "string") {
+            try { impresores = JSON.parse(impresores); }
+            catch { impresores = [impresores]; }
+          }
+          if (!Array.isArray(impresores)) impresores = [impresores];
+
+          let html = `
+            <div style="max-width:220px">
+              <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
+              <p><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
+              <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
+              <p>${props.nota}</p>
+          `;
+          if (props.imagen) {
+            html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
+          }
+          html += `</div>`;
+          return html;
+        }
+
+        function activarPopups(capa) {
+          map.on("mouseenter", capa, (e) => {
+            map.getCanvas().style.cursor = "pointer";
+            popup.setLngLat(e.features[0].geometry.coordinates)
+                 .setHTML(generarHTML(e.features[0].properties))
+                 .addTo(map);
           });
 
-          map.addSource("imprenta-europa", { type: "geojson", data: geo });
-
-          map.addLayer({
-            id: "imprenta-europa-numeros",
-            type: "symbol",
-            source: "imprenta-europa",
-            layout: {
-              "text-field": ["get", "orden"],
-              "text-size": 18,
-              "text-font": ["Open Sans Bold"],
-              "text-anchor": "center"
-            },
-            paint: {
-              "text-color": "#3a2a1a",
-              "text-halo-color": "#fffaf0",
-              "text-halo-width": 2
-            }
+          map.on("mouseleave", capa, () => {
+            map.getCanvas().style.cursor = "";
+            popup.remove();
           });
-        });
+        }
 
-      /* POPUPS */
-      const popup = new maplibregl.Popup({
-        closeButton: false,
-        closeOnClick: false
+        activarPopups("imprenta-espana-numeros");
+        activarPopups("imprenta-europa-numeros");
+
       });
-
-      function generarHTML(props) {
-        let impresores = props.impresores_relevantes;
-        if (typeof impresores === "string") {
-          try { impresores = JSON.parse(impresores); }
-          catch { impresores = [impresores]; }
-        }
-        if (!Array.isArray(impresores)) impresores = [impresores];
-
-        let html = `
-          <div style="max-width:220px">
-            <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
-            <p><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
-            <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
-            <p>${props.nota}</p>
-        `;
-        if (props.imagen) {
-          html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
-        }
-        html += `</div>`;
-        return html;
-      }
-
-      /* EVENTOS POPUP */
-      function activarPopups(capa) {
-        map.on("mouseenter", capa, (e) => {
-          map.getCanvas().style.cursor = "pointer";
-          popup.setLngLat(e.features[0].geometry.coordinates)
-               .setHTML(generarHTML(e.features[0].properties))
-               .addTo(map);
-        });
-
-        map.on("mouseleave", capa, () => {
-          map.getCanvas().style.cursor = "";
-          popup.remove();
-        });
-      }
-
-      activarPopups("imprenta-espana-numeros");
-      activarPopups("imprenta-europa-numeros");
     });
   </script>
 </body>
