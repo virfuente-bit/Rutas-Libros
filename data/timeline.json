@@ -56,17 +56,6 @@
       }
     },
     {
-  "city": "Londres",
-  "year": 1476,
-  "note": "William Caxton introduce la imprenta en Inglaterra tras formarse en los Países Bajos. Su taller en Westminster impulsa la producción de obras en inglés medio.",
-  "map_action": {
-    "flyTo": {
-      "center": [-0.1276, 51.5074],
-      "zoom": 6
-    }
-  }
-},
-    {
       "city": "Segovia",
       "year": 1472,
       "note": "Primera ciudad española con imprenta. Juan Párix imprime el Sinodal de Aguilafuente.",
@@ -100,6 +89,17 @@
       }
     },
     {
+      "city": "Londres",
+      "year": 1476,
+      "note": "William Caxton introduce la imprenta en Inglaterra tras formarse en los Países Bajos. Su taller en Westminster impulsa la producción de obras en inglés medio.",
+      "map_action": {
+        "flyTo": {
+          "center": [-0.1276, 51.5074],
+          "zoom": 6
+        }
+      }
+    },
+    {
       "city": "Sevilla",
       "year": 1477,
       "note": "Puerto clave del comercio atlántico. La imprenta crece con la expansión económica.",
@@ -112,4 +112,3 @@
     }
   ]
 }
-
