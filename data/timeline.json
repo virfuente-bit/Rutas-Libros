@@ -1,104 +1,103 @@
 {
   "timeline": [
     {
-      "year": 1450,
       "city": "Maguncia",
-      "country": "Alemania",
-      "printers": ["Johannes Gutenberg"],
-      "note": "Inicio de la imprenta en Europa",
+      "year": 1450,
+      "note": "Cuna de la imprenta. Johannes Gutenberg desarrolla aquí la tipografía móvil metálica.",
       "map_action": {
-        "flyTo": { "center": [8.2473, 49.9929], "zoom": 5 },
-        "highlight": "Maguncia"
+        "flyTo": {
+          "center": [8.2473, 50.0014],
+          "zoom": 6
+        }
       }
     },
     {
-      "year": 1455,
       "city": "Bamberg",
-      "country": "Alemania",
-      "printers": ["Albrecht Pfister"],
-      "note": "Primeros impresos ilustrados",
+      "year": 1455,
+      "note": "Uno de los primeros centros impresores tras Maguncia. Producción temprana de biblias y textos religiosos.",
       "map_action": {
-        "flyTo": { "center": [10.8903, 49.8987], "zoom": 5 },
-        "highlight": "Bamberg"
+        "flyTo": {
+          "center": [10.8903, 49.8987],
+          "zoom": 6
+        }
       }
     },
     {
-      "year": 1467,
       "city": "Roma",
-      "country": "Italia",
-      "printers": ["Conrad Sweynheym", "Arnold Pannartz"],
-      "note": "Uno de los primeros centros impresores italianos",
+      "year": 1467,
+      "note": "La imprenta llega a Italia. Sweynheym y Pannartz introducen la tipografía romana.",
       "map_action": {
-        "flyTo": { "center": [12.4964, 41.9028], "zoom": 5 },
-        "highlight": "Roma"
+        "flyTo": {
+          "center": [12.4964, 41.9028],
+          "zoom": 6
+        }
       }
     },
     {
-      "year": 1469,
       "city": "Venecia",
-      "country": "Italia",
-      "printers": ["Johannes de Spira", "Aldo Manuzio"],
-      "note": "Principal centro editorial del Renacimiento",
+      "year": 1469,
+      "note": "Se convierte en el mayor centro impresor del siglo XV. Hogar de Aldo Manuzio.",
       "map_action": {
-        "flyTo": { "center": [12.3155, 45.4408], "zoom": 5 },
-        "highlight": "Venecia"
+        "flyTo": {
+          "center": [12.3155, 45.4408],
+          "zoom": 6
+        }
       }
     },
     {
-      "year": 1470,
       "city": "París",
-      "country": "Francia",
-      "printers": ["Ulrich Gering", "Michael Friburger", "Martin Crantz"],
-      "note": "Primer taller francés documentado",
+      "year": 1470,
+      "note": "La Sorbona impulsa la llegada de la imprenta. Gran producción de textos universitarios.",
       "map_action": {
-        "flyTo": { "center": [2.3522, 48.8566], "zoom": 5 },
-        "highlight": "París"
+        "flyTo": {
+          "center": [2.3522, 48.8566],
+          "zoom": 6
+        }
       }
     },
     {
-      "year": 1472,
       "city": "Segovia",
-      "country": "España",
-      "printers": ["Juan Párix"],
-      "note": "Primera imprenta de España",
+      "year": 1472,
+      "note": "Primera ciudad española con imprenta. Juan Párix imprime el Sinodal de Aguilafuente.",
       "map_action": {
-        "flyTo": { "center": [-4.1184, 40.9481], "zoom": 5 },
-        "highlight": "Segovia"
+        "flyTo": {
+          "center": [-4.1184, 40.9481],
+          "zoom": 6
+        }
       }
     },
     {
-      "year": 1475,
-      "city": "Barcelona",
-      "country": "España",
-      "printers": ["Impresores alemanes"],
-      "note": "Uno de los primeros focos urbanos",
-      "map_action": {
-        "flyTo": { "center": [2.1734, 41.3851], "zoom": 5 },
-        "highlight": "Barcelona"
-      }
-    },
-    {
-      "year": 1473,
       "city": "Valencia",
-      "country": "España",
-      "printers": ["Lambert Palmart"],
-      "note": "Centro clave en la Corona de Aragón",
+      "year": 1473,
+      "note": "Centro mediterráneo clave. Se imprimen obras religiosas y literatura en romance.",
       "map_action": {
-        "flyTo": { "center": [-0.3763, 39.4699], "zoom": 5 },
-        "highlight": "Valencia"
+        "flyTo": {
+          "center": [-0.3763, 39.4699],
+          "zoom": 6
+        }
       }
     },
     {
-      "year": 1477,
-      "city": "Sevilla",
-      "country": "España",
-      "printers": ["Impresores alemanes"],
-      "note": "Gran dinamismo comercial y cultural",
+      "city": "Barcelona",
+      "year": 1475,
+      "note": "Ciudad comercial abierta a Europa. Producción jurídica, religiosa y literaria.",
       "map_action": {
-        "flyTo": { "center": [-5.9845, 37.3891], "zoom": 5 },
-        "highlight": "Sevilla"
+        "flyTo": {
+          "center": [2.1734, 41.3851],
+          "zoom": 6
+        }
+      }
+    },
+    {
+      "city": "Sevilla",
+      "year": 1477,
+      "note": "Puerto clave del comercio atlántico. La imprenta crece con la expansión económica.",
+      "map_action": {
+        "flyTo": {
+          "center": [-5.9845, 37.3891],
+          "zoom": 6
+        }
       }
     }
   ]
 }
-
