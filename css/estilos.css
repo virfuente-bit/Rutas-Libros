@@ -31,26 +31,6 @@ body {
   text-shadow: 0 0 1px #000;
 }
 
-/* BOTÓN CERRAR */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #3a2f1b;
-  color: #fffaf0;
-  border: none;
-  font-size: 20px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 1600;
-  transition: background 0.2s;
-}
-
-.close-btn:hover {
-  background: #5a4528;
-}
-
 /* TIMELINE */
 #timeline {
   display: flex;
@@ -104,19 +84,29 @@ body {
   border-radius: 5px;
 }
 
-/* BOTÓN HAMBURGUESA */
+/* BOTÓN FLECHA (actualizado) */
 .toggle-btn {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 2000;
-  background: white;
-  border: 1px solid #ccc;
+
+  /* NUEVO ESTILO */
+  background: #fff4d6;          /* crema suave */
+  border: 1px solid #8c3f2f;    /* marrón */
+  color: #8c3f2f;               /* marrón de los círculos */
   padding: 8px 12px;
-  font-size: 20px;
-  border-radius: 4px;
+  font-size: 28px;
+  border-radius: 6px;
   cursor: pointer;
-  display: none;
+  transition: all 0.25s ease;
+}
+
+/* HOVER DE LA FLECHA */
+.toggle-btn:hover {
+  background: #f0e0c0;          /* marrón crema más intenso */
+  color: #6f2f22;               /* marrón más oscuro */
+  transform: scale(1.08);       /* pequeño efecto “pop” */
 }
 
 /* OVERLAY */
