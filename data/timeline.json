@@ -67,7 +67,7 @@
       }
     },
     {
-      "year": 1473,
+      "year": 1475,
       "city": "Barcelona",
       "country": "España",
       "printers": ["Impresores alemanes"],
@@ -89,7 +89,7 @@
       }
     },
     {
-      "year": 1473,
+      "year": 1477,
       "city": "Sevilla",
       "country": "España",
       "printers": ["Impresores alemanes"],
@@ -101,3 +101,4 @@
     }
   ]
 }
+
