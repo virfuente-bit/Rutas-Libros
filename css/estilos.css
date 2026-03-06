@@ -156,4 +156,85 @@ body {
   #contenedor {
     display: block;
   }
+/* ================================
+   TIMELINE VERTICAL (ORDENADOR)
+   ================================ */
+
+#timeline {
+  position: relative;
+  margin-left: 25px;       /* espacio para la línea */
+  padding-left: 15px;
+  border-left: 3px solid #bfa77a; /* línea vertical */
 }
+
+.paso {
+  position: relative;
+  padding: 10px 0 10px 10px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  border-radius: 4px;
+}
+
+/* Punto del timeline */
+.paso::before {
+  content: "";
+  position: absolute;
+  left: -23px;   /* alineado con la línea */
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  background: #8c6f3c;
+  border-radius: 50%;
+  border: 2px solid #fffaf0;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+  transition: 0.25s ease;
+}
+
+/* Estado activo */
+.paso.activo {
+  background: #fff4d6;
+  border-left: 3px solid #8c6f3c;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  transform: scale(1.02);
+}
+
+.paso.activo::before {
+  background: #3a2f1b;
+  transform: scale(1.2);
+}
+
+/* ================================
+   TIMELINE EN MÓVIL
+   ================================ */
+
+@media (max-width: 600px) {
+
+  #timeline {
+    margin-left: 15px;     /* menos margen */
+    padding-left: 10px;
+    border-left-width: 2px; /* línea más fina */
+  }
+
+  .paso {
+    padding-left: 8px;
+    margin-bottom: 10px;
+  }
+
+  .paso::before {
+    left: -18px;   /* recolocamos el punto */
+    width: 10px;
+    height: 10px;
+  }
+
+  .paso.activo {
+    transform: scale(1.01); /* más suave en móvil */
+  }
+
+  .paso.activo::before {
+    transform: scale(1.15);
+  }
+}
+
+}
+
