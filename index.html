@@ -64,22 +64,23 @@
     const map = new maplibregl.Map({
       container: "map",
       style: {
-        version: 8,
-        sources: {
-          base: {
-            type: "raster",
-            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-            tileSize: 256
-          }
-        },
-        layers: [
-          {
-            id: "base-layer",
-            type: "raster",
-            source: "base"
-          }
-        ]
-      },
+  version: 8,
+  glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  sources: {
+    base: {
+      type: "raster",
+      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      tileSize: 256
+    }
+  },
+  layers: [
+    {
+      id: "base-layer",
+      type: "raster",
+      source: "base"
+    }
+  ]
+},
       center: [-3.7, 40.4],
       zoom: 4
     });
@@ -228,3 +229,4 @@
   </script>
 </body>
 </html>
+
