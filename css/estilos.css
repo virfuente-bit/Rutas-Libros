@@ -31,20 +31,26 @@ body {
   text-shadow: 0 0 1px #000;
 }
 
-/* TIMELINE */
+/* ================================
+   TIMELINE VERTICAL (ORDENADOR)
+   ================================ */
+
 #timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  position: relative;
+  margin-left: 25px;
+  padding-left: 15px;
+  border-left: 3px solid #bfa77a;
 }
 
 .paso {
-  padding: 12px;
+  position: relative;
+  padding: 10px 0 10px 10px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  border-radius: 4px;
   background: #fffaf0;
   border: 1px solid #bfa77a;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s;
   box-shadow: 0 0 4px rgba(0,0,0,0.15);
 }
 
@@ -52,6 +58,34 @@ body {
   background: #fff4d6;
   transform: scale(1.02);
   border-color: #8c6f3c;
+}
+
+/* Punto del timeline */
+.paso::before {
+  content: "";
+  position: absolute;
+  left: -23px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  background: #8c6f3c;
+  border-radius: 50%;
+  border: 2px solid #fffaf0;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+  transition: 0.25s ease;
+}
+
+/* Estado activo */
+.paso.activo {
+  background: #fff4d6;
+  border-left: 3px solid #8c6f3c;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  transform: scale(1.02);
+}
+
+.paso.activo::before {
+  background: #3a2f1b;
+  transform: scale(1.2);
 }
 
 /* MAPA */
@@ -84,16 +118,15 @@ body {
   border-radius: 5px;
 }
 
-/* BOTÓN FLECHA (actualizado) */
+/* BOTÓN FLECHA */
 .toggle-btn {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 2000;
-
-  background: #fff4d6;          /* crema suave */
-  border: 1px solid #8c3f2f;    /* marrón */
-  color: #8c3f2f;               /* marrón de los círculos */
+  background: #fff4d6;
+  border: 1px solid #8c3f2f;
+  color: #8c3f2f;
   padding: 8px 12px;
   font-size: 28px;
   border-radius: 6px;
@@ -102,11 +135,10 @@ body {
   display: none;
 }
 
-/* HOVER DE LA FLECHA */
 .toggle-btn:hover {
-  background: #f0e0c0;          /* crema más intensa */
-  color: #6f2f22;               /* marrón más oscuro */
-  transform: scale(1.08);       /* pequeño efecto “pop” */
+  background: #f0e0c0;
+  color: #6f2f22;
+  transform: scale(1.08);
 }
 
 /* OVERLAY */
@@ -127,7 +159,10 @@ body {
   opacity: 1;
 }
 
-/* MÓVIL */
+/* ================================
+   MÓVIL
+   ================================ */
+
 @media (max-width: 768px) {
 
   .toggle-btn {
@@ -156,52 +191,6 @@ body {
   #contenedor {
     display: block;
   }
-/* ================================
-   TIMELINE VERTICAL (ORDENADOR)
-   ================================ */
-
-#timeline {
-  position: relative;
-  margin-left: 25px;       /* espacio para la línea */
-  padding-left: 15px;
-  border-left: 3px solid #bfa77a; /* línea vertical */
-}
-
-.paso {
-  position: relative;
-  padding: 10px 0 10px 10px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  transition: 0.25s ease;
-  border-radius: 4px;
-}
-
-/* Punto del timeline */
-.paso::before {
-  content: "";
-  position: absolute;
-  left: -23px;   /* alineado con la línea */
-  top: 12px;
-  width: 12px;
-  height: 12px;
-  background: #8c6f3c;
-  border-radius: 50%;
-  border: 2px solid #fffaf0;
-  box-shadow: 0 0 2px rgba(0,0,0,0.3);
-  transition: 0.25s ease;
-}
-
-/* Estado activo */
-.paso.activo {
-  background: #fff4d6;
-  border-left: 3px solid #8c6f3c;
-  box-shadow: 0 0 6px rgba(0,0,0,0.2);
-  transform: scale(1.02);
-}
-
-.paso.activo::before {
-  background: #3a2f1b;
-  transform: scale(1.2);
 }
 
 /* ================================
@@ -211,9 +200,9 @@ body {
 @media (max-width: 600px) {
 
   #timeline {
-    margin-left: 15px;     /* menos margen */
+    margin-left: 15px;
     padding-left: 10px;
-    border-left-width: 2px; /* línea más fina */
+    border-left-width: 2px;
   }
 
   .paso {
@@ -222,19 +211,16 @@ body {
   }
 
   .paso::before {
-    left: -18px;   /* recolocamos el punto */
+    left: -18px;
     width: 10px;
     height: 10px;
   }
 
   .paso.activo {
-    transform: scale(1.01); /* más suave en móvil */
+    transform: scale(1.01);
   }
 
   .paso.activo::before {
     transform: scale(1.15);
   }
 }
-
-}
-
