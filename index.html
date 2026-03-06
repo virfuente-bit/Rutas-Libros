@@ -19,7 +19,7 @@
 <body>
 
   <!-- BOTÓN FLECHA -->
-  <button id="toggle-panel" class="toggle-btn">➤</button>
+  <button id="toggle-panel" class="toggle-btn">▶</button>
 
   <!-- OVERLAY -->
   <div id="overlay"></div>
@@ -56,9 +56,9 @@
     // Cambiar icono al abrir/cerrar panel
 function actualizarFlecha() {
   if (panel.classList.contains("open")) {
-    toggleBtn.textContent = "⬅";   // flecha hacia la izquierda (cerrar)
+    toggleBtn.textContent = "◀";   // flecha hacia la izquierda (cerrar)
   } else {
-    toggleBtn.textContent = "➤";   // flecha hacia la derecha (abrir)
+    toggleBtn.textContent = "▶";   // flecha hacia la derecha (abrir)
   }
 }
     
@@ -214,5 +214,6 @@ overlay.addEventListener("click", () => {
   </script>
 </body>
 </html>
+
 
 
