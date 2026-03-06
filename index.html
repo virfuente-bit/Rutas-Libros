@@ -27,9 +27,6 @@
   <div id="contenedor">
     <div id="panel">
 
-      <!-- BOTÓN DE CERRAR -->
-      <button id="close-panel" class="close-btn">✕</button>
-
       <h2>Llegada de la Imprenta a España</h2>
       <div id="timeline"></div>
     </div>
@@ -56,9 +53,30 @@
       setTimeout(() => overlay.style.display = "none", 300);
     }
 
-    toggleBtn.addEventListener("click", abrirPanel);
-    closeBtn.addEventListener("click", cerrarPanel);
-    overlay.addEventListener("click", cerrarPanel);
+    // Cambiar icono al abrir/cerrar panel
+function actualizarFlecha() {
+  if (panel.classList.contains("open")) {
+    toggleBtn.textContent = "⬅";   // flecha hacia la izquierda (cerrar)
+  } else {
+    toggleBtn.textContent = "➤";   // flecha hacia la derecha (abrir)
+  }
+}
+    
+    toggleBtn.addEventListener("click", () => {
+  abrirPanel();
+  actualizarFlecha();
+});
+
+closeBtn.addEventListener("click", () => {
+  cerrarPanel();
+  actualizarFlecha();
+});
+
+overlay.addEventListener("click", () => {
+  cerrarPanel();
+  actualizarFlecha();
+});
+
 
     /* MAPA — estilo mínimo + raster OSM */
     const map = new maplibregl.Map({
@@ -196,4 +214,5 @@
   </script>
 </body>
 </html>
+
 
