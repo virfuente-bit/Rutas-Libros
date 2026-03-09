@@ -33,13 +33,7 @@
       <div id="intro">
         <h3>La expansión de la imprenta</h3>
         <p>
-          La imprenta, nacida en la ciudad alemana de Maguncia hacia 1450, transformó para siempre la circulación del conocimiento en Europa. En apenas tres décadas, el nuevo arte tipográfico se extendió por los principales centros comerciales, universitarios y religiosos del continente.
-        </p>
-        <p>
-          Desde los talleres pioneros del valle del Rin hasta las prensas humanistas de Italia y Francia, la imprenta viajó siguiendo las rutas del comercio, las redes intelectuales y la demanda creciente de libros.
-        </p>
-        <p>
-          A partir de 1472, el nuevo invento cruzó los Pirineos y comenzó a arraigar en las ciudades españolas, donde universidades, catedrales y mercaderes impulsaron su rápida expansión.
+          La imprenta, nacida en la ciudad alemana de Maguncia hacia 1450, transformó para siempre la circulación del conocimiento en Europa.
         </p>
         <p>
           Este recorrido interactivo muestra, paso a paso, cómo se difundió la imprenta por Europa y cómo llegó finalmente a España.
@@ -54,13 +48,7 @@
       <div id="cierre">
         <h3>Conclusión</h3>
         <p>
-          La llegada de la imprenta a España no fue un hecho aislado, sino el resultado de un proceso europeo más amplio. Los impresores que trabajaron en Segovia, Valencia, Barcelona o Sevilla formaban parte de una red internacional de artesanos, comerciantes y humanistas que compartían técnicas, tipos móviles y modelos editoriales.
-        </p>
-        <p>
-          En pocas décadas, la península se integró plenamente en la cultura impresa europea, contribuyendo a la difusión de obras religiosas, jurídicas, literarias y científicas que marcaron el inicio de la Edad Moderna.
-        </p>
-        <p>
-          La historia de la imprenta es, en definitiva, la historia de cómo el conocimiento comenzó a multiplicarse y a viajar más rápido que nunca.
+          La llegada de la imprenta a España fue parte de un proceso europeo más amplio.
         </p>
       </div>
 
@@ -72,6 +60,10 @@
   </div> <!-- FIN DEL CONTENEDOR -->
 
   <script>
+    /* VARIABLES GLOBALES */
+    let popupPanel = null;          // Popup que se abre desde el panel
+    let datosCiudades = {};         // Diccionario con datos completos de cada ciudad
+
     /* PANEL + OVERLAY */
     const panel = document.getElementById("panel");
     const overlay = document.getElementById("overlay");
@@ -140,28 +132,28 @@
 
           div.addEventListener("click", () => {
 
-  // 1. Volar al punto
-  map.flyTo({
-    center: item.map_action.flyTo.center,
-    zoom: item.map_action.flyTo.zoom,
-    speed: 0.6
-  });
+            // 1. Volar al punto
+            map.flyTo({
+              center: item.map_action.flyTo.center,
+              zoom: item.map_action.flyTo.zoom,
+              speed: 0.6
+            });
 
-  // 2. Cerrar panel en móvil
-  if (window.innerWidth <= 768) cerrarPanel();
+            // 2. Cerrar panel en móvil
+            if (window.innerWidth <= 768) cerrarPanel();
 
-  // 3. Crear popup manualmente
-  new maplibregl.Popup({ closeButton: true })
-    .setLngLat(item.map_action.flyTo.center)
-    .setHTML(`
-      <div style="max-width:220px">
-        <h3 style="margin:0; font-size:16px;">${item.city}</h3>
-        <p><strong>Año llegada imprenta:</strong> ${item.year}</p>
-        <p>${item.note}</p>
-      </div>
-    `)
-    .addTo(map);
-});
+            // 3. Cerrar popup anterior
+            if (popupPanel) popupPanel.remove();
+
+            // 4. Obtener propiedades completas desde el diccionario
+            const props = datosCiudades[item.city];
+
+            // 5. Crear popup usando la MISMA función que los círculos
+            popupPanel = new maplibregl.Popup({ closeButton: true })
+              .setLngLat(item.map_action.flyTo.center)
+              .setHTML(generarHTML(props))
+              .addTo(map);
+          });
 
           cont.appendChild(div);
         });
@@ -169,45 +161,7 @@
 
     map.on("load", function () {
 
-      /* CAPA ESPAÑA */
-      fetch("data/espana.geojson")
-        .then(r => r.json())
-        .then(geo => {
-          map.addSource("imprenta-espana", { type: "geojson", data: geo });
-
-          map.addLayer({
-            id: "imprenta-espana-circulos",
-            type: "circle",
-            source: "imprenta-espana",
-            paint: {
-              "circle-radius": 7,
-              "circle-color": "#8c3f2f",
-              "circle-stroke-width": 2,
-              "circle-stroke-color": "#fffaf0"
-            }
-          });
-        });
-
-      /* CAPA EUROPA */
-      fetch("data/europa.geojson")
-        .then(r => r.json())
-        .then(geo => {
-          map.addSource("imprenta-europa", { type: "geojson", data: geo });
-
-          map.addLayer({
-            id: "imprenta-europa-circulos",
-            type: "circle",
-            source: "imprenta-europa",
-            paint: {
-              "circle-radius": 7,
-              "circle-color": "#3a2f1b",
-              "circle-stroke-width": 2,
-              "circle-stroke-color": "#fffaf0"
-            }
-          });
-        });
-
-      /* POPUPS */
+      /* POPUP GENERAL */
       const popup = new maplibregl.Popup({
         closeButton: false,
         closeOnClick: false
@@ -235,6 +189,60 @@
         return html;
       }
 
+      /* CAPA ESPAÑA */
+      fetch("data/espana.geojson")
+        .then(r => r.json())
+        .then(geo => {
+
+          // Guardar datos de cada ciudad
+          geo.features.forEach(f => {
+            datosCiudades[f.properties.nombre] = f.properties;
+          });
+
+          map.addSource("imprenta-espana", { type: "geojson", data: geo });
+
+          map.addLayer({
+            id: "imprenta-espana-circulos",
+            type: "circle",
+            source: "imprenta-espana",
+            paint: {
+              "circle-radius": 7,
+              "circle-color": "#8c3f2f",
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "#fffaf0"
+            }
+          });
+
+          activarPopups("imprenta-espana-circulos");
+        });
+
+      /* CAPA EUROPA */
+      fetch("data/europa.geojson")
+        .then(r => r.json())
+        .then(geo => {
+
+          // Guardar datos de cada ciudad
+          geo.features.forEach(f => {
+            datosCiudades[f.properties.nombre] = f.properties;
+          });
+
+          map.addSource("imprenta-europa", { type: "geojson", data: geo });
+
+          map.addLayer({
+            id: "imprenta-europa-circulos",
+            type: "circle",
+            source: "imprenta-europa",
+            paint: {
+              "circle-radius": 7,
+              "circle-color": "#3a2f1b",
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "#fffaf0"
+            }
+          });
+
+          activarPopups("imprenta-europa-circulos");
+        });
+
       function activarPopups(capa) {
         map.on("mouseenter", capa, (e) => {
           map.getCanvas().style.cursor = "pointer";
@@ -249,11 +257,8 @@
         });
       }
 
-      activarPopups("imprenta-espana-circulos");
-      activarPopups("imprenta-europa-circulos");
     });
   </script>
 
 </body>
 </html>
-
