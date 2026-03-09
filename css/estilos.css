@@ -165,8 +165,13 @@ body {
 
 @media (max-width: 768px) {
 
+  /* Flecha más pequeña y más abajo */
   .toggle-btn {
     display: block;
+    font-size: 20px;      /* antes 28px */
+    padding: 6px 10px;    /* más pequeña */
+    top: 15px;            /* más abajo */
+    left: 15px;
   }
 
   #panel {
@@ -224,3 +229,4 @@ body {
     transform: scale(1.15);
   }
 }
+
