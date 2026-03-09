@@ -119,82 +119,56 @@
       zoom: 4
     });
 
-    /* TIMELINE */
-    fetch("data/timeline.json")
-      .then(r => r.json())
-      .then(datos => {
-        const cont = document.getElementById("timeline");
+    /* POPUP GENERAL */
+    const popup = new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
 
-        datos.timeline.forEach((item) => {
-          const div = document.createElement("div");
-          div.className = "paso";
-          div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
-
-          div.addEventListener("click", () => {
-
-            // 1. Volar al punto
-            map.flyTo({
-              center: item.map_action.flyTo.center,
-              zoom: item.map_action.flyTo.zoom,
-              speed: 0.6
-            });
-
-            // 2. Cerrar panel en móvil
-            if (window.innerWidth <= 768) cerrarPanel();
-
-            // 3. Cerrar popup anterior
-            if (popupPanel) popupPanel.remove();
-
-            // 4. Obtener propiedades completas desde el diccionario
-            const props = datosCiudades[item.city];
-
-            // 5. Crear popup usando la MISMA función que los círculos
-            popupPanel = new maplibregl.Popup({ closeButton: true })
-              .setLngLat(item.map_action.flyTo.center)
-              .setHTML(generarHTML(props))
-              .addTo(map);
-          });
-
-          cont.appendChild(div);
-        });
-      });
-
-    map.on("load", function () {
-
-      /* POPUP GENERAL */
-      const popup = new maplibregl.Popup({
-        closeButton: false,
-        closeOnClick: false
-      });
-
-      function generarHTML(props) {
-        let impresores = props.impresores_relevantes;
-        if (typeof impresores === "string") {
-          try { impresores = JSON.parse(impresores); }
-          catch { impresores = [impresores]; }
-        }
-        if (!Array.isArray(impresores)) impresores = [impresores];
-
-        let html = `
-          <div style="max-width:220px">
-            <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
-            <p><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
-            <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
-            <p>${props.nota}</p>
-        `;
-        if (props.imagen) {
-          html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
-        }
-        html += `</div>`;
-        return html;
+    function generarHTML(props) {
+      let impresores = props.impresores_relevantes;
+      if (typeof impresores === "string") {
+        try { impresores = JSON.parse(impresores); }
+        catch { impresores = [impresores]; }
       }
+      if (!Array.isArray(impresores)) impresores = [impresores];
+
+      let html = `
+        <div style="max-width:220px">
+          <h3 style="margin:0; font-size:16px;">${props.nombre}</h3>
+          <p><strong>Año llegada imprenta:</strong> ${props.ano_llegada_imprenta}</p>
+          <p><strong>Impresores:</strong> ${impresores.join(", ")}</p>
+          <p>${props.nota}</p>
+      `;
+      if (props.imagen) {
+        html += `<img src="${props.imagen}" style="width:100%; border-radius:4px; margin-top:6px;">`;
+      }
+      html += `</div>`;
+      return html;
+    }
+
+    function activarPopups(capa) {
+      map.on("mouseenter", capa, (e) => {
+        map.getCanvas().style.cursor = "pointer";
+        popup.setLngLat(e.features[0].geometry.coordinates)
+             .setHTML(generarHTML(e.features[0].properties))
+             .addTo(map);
+      });
+
+      map.on("mouseleave", capa, () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
+    }
+
+    /* CARGA DE CAPAS Y TIMELINE */
+    map.on("load", function () {
 
       /* CAPA ESPAÑA */
       fetch("data/espana.geojson")
         .then(r => r.json())
         .then(geo => {
 
-          // Guardar datos de cada ciudad
           geo.features.forEach(f => {
             datosCiudades[f.properties.nombre] = f.properties;
           });
@@ -221,7 +195,6 @@
         .then(r => r.json())
         .then(geo => {
 
-          // Guardar datos de cada ciudad
           geo.features.forEach(f => {
             datosCiudades[f.properties.nombre] = f.properties;
           });
@@ -243,19 +216,43 @@
           activarPopups("imprenta-europa-circulos");
         });
 
-      function activarPopups(capa) {
-        map.on("mouseenter", capa, (e) => {
-          map.getCanvas().style.cursor = "pointer";
-          popup.setLngLat(e.features[0].geometry.coordinates)
-               .setHTML(generarHTML(e.features[0].properties))
-               .addTo(map);
-        });
+      /* AHORA SÍ: CARGAR TIMELINE */
+      fetch("data/timeline.json")
+        .then(r => r.json())
+        .then(datos => {
+          const cont = document.getElementById("timeline");
 
-        map.on("mouseleave", capa, () => {
-          map.getCanvas().style.cursor = "";
-          popup.remove();
+          datos.timeline.forEach((item) => {
+            const div = document.createElement("div");
+            div.className = "paso";
+            div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
+
+            div.addEventListener("click", () => {
+
+              map.flyTo({
+                center: item.map_action.flyTo.center,
+                zoom: item.map_action.flyTo.zoom,
+                speed: 0.6
+              });
+
+              if (window.innerWidth <= 768) cerrarPanel();
+
+              if (popupPanel) popupPanel.remove();
+
+              const props = datosCiudades[item.city];
+
+              popupPanel = new maplibregl.Popup({ closeButton: true })
+                .setLngLat(item.map_action.flyTo.center)
+                .setHTML(generarHTML(props))
+                .addTo(map);
+
+              document.querySelectorAll(".paso").forEach(p => p.classList.remove("activo"));
+              div.classList.add("activo");
+            });
+
+            cont.appendChild(div);
+          });
         });
-      }
 
     });
   </script>
