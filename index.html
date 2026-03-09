@@ -139,13 +139,29 @@
           div.innerHTML = `<strong>${item.city}</strong> (${item.year})<br>${item.note}`;
 
           div.addEventListener("click", () => {
-            map.flyTo({
-              center: item.map_action.flyTo.center,
-              zoom: item.map_action.flyTo.zoom,
-              speed: 0.6
-            });
-            if (window.innerWidth <= 768) cerrarPanel();
-          });
+
+  // 1. Volar al punto
+  map.flyTo({
+    center: item.map_action.flyTo.center,
+    zoom: item.map_action.flyTo.zoom,
+    speed: 0.6
+  });
+
+  // 2. Cerrar panel en móvil
+  if (window.innerWidth <= 768) cerrarPanel();
+
+  // 3. Crear popup manualmente
+  new maplibregl.Popup({ closeButton: true })
+    .setLngLat(item.map_action.flyTo.center)
+    .setHTML(`
+      <div style="max-width:220px">
+        <h3 style="margin:0; font-size:16px;">${item.city}</h3>
+        <p><strong>Año llegada imprenta:</strong> ${item.year}</p>
+        <p>${item.note}</p>
+      </div>
+    `)
+    .addTo(map);
+});
 
           cont.appendChild(div);
         });
@@ -240,3 +256,4 @@
 
 </body>
 </html>
+
