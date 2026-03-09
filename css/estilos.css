@@ -163,6 +163,9 @@ body {
    MÓVIL
    ================================ */
 
+/* ================================
+   MÓVIL
+   ================================ */
 @media (max-width: 768px) {
 
   /* Flecha más pequeña y más abajo */
@@ -174,6 +177,7 @@ body {
     left: 15px;
   }
 
+  /* Panel móvil */
   #panel {
     position: absolute;
     top: 0;
@@ -188,13 +192,20 @@ body {
     transform: translateX(0);
   }
 
+  /* Mapa */
   #map {
     width: 100%;
     height: 100vh;
   }
 
+  /* Contenedor */
   #contenedor {
     display: block;
+  }
+
+  /* Bajar la intro para que no quede tapada */
+  #intro {
+    margin-top: 60px;
   }
 }
 
@@ -229,4 +240,5 @@ body {
     transform: scale(1.15);
   }
 }
+
 
